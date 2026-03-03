@@ -2,13 +2,20 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useBookModal } from "@/contexts/BookModalContext";
 
 const LOGO_SRC = "/img/logo.png";
 
+function isNavLinkActive(pathname: string, href: string): boolean {
+  if (pathname === "/") return href === "/#fleet";
+  return pathname === href;
+}
+
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { openBookModal } = useBookModal();
@@ -36,43 +43,55 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="relative z-10 flex items-center gap-2 font-display text-xl font-semibold tracking-wide text-white hover:text-gold transition-colors"
-        >
-          <span className="relative h-12 w-[140px] shrink-0 flex items-center">
+        <Link href="/" className="relative z-10 flex items-center gap-2 font-display text-xl font-semibold tracking-wide text-white hover:text-gold transition-colors">
+          <motion.span whileTap={{ scale: 0.95 }} className="block">
+          <span className="relative h-10 w-[120px] sm:h-12 sm:w-[140px] shrink-0 flex items-center">
             <Image
               src={LOGO_SRC}
               alt="AutoBreeze"
               fill
               className="object-contain object-left"
-              sizes="140px"
+              sizes="(max-width: 640px) 120px, 140px"
               unoptimized
               priority
             />
           </span>
+          </motion.span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-white/90 hover:text-gold transition-colors tracking-wide"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const active = isNavLinkActive(pathname, link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="relative py-2 text-sm font-medium text-white/90 hover:text-gold transition-colors tracking-wide"
+              >
+                {active && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-gold rounded-full"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <motion.span whileTap={{ scale: 0.95 }} className="relative block">
+                  {link.label}
+                </motion.span>
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden md:block">
-          <button
+          <motion.button
             type="button"
             onClick={() => { openBookModal(); setMobileOpen(false); }}
+            whileTap={{ scale: 0.95 }}
             className="inline-flex items-center justify-center rounded-full border-2 border-gold px-6 py-2.5 text-sm font-semibold text-gold hover:bg-gold hover:text-matte-black transition-all duration-300"
           >
             Book Now
-          </button>
+          </motion.button>
         </div>
 
         <button
@@ -107,16 +126,19 @@ export default function Navbar() {
                   className="text-white/90 hover:text-gold font-medium"
                   onClick={() => setMobileOpen(false)}
                 >
-                  {link.label}
+                  <motion.span whileTap={{ scale: 0.95 }} className="block">
+                    {link.label}
+                  </motion.span>
                 </Link>
               ))}
-              <button
+              <motion.button
                 type="button"
                 onClick={() => { openBookModal(); setMobileOpen(false); }}
+                whileTap={{ scale: 0.95 }}
                 className="rounded-full border-2 border-gold px-6 py-3 text-center font-semibold text-gold w-full"
               >
                 Book Now
-              </button>
+              </motion.button>
             </nav>
           </motion.div>
         )}

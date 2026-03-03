@@ -87,7 +87,7 @@ export default function BrandCarousel() {
                     src={`/static_images/${encodeURIComponent(brandName)}/${img}`}
                     alt={`${brandName} ${img}`}
                     fill
-                    className="object-cover"
+                    className="car-image-zoom"
                     sizes="(max-width: 640px) 280px, 320px"
                     unoptimized
                   />

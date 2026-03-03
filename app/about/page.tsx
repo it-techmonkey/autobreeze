@@ -13,8 +13,8 @@ export default function AboutPage() {
       <Navbar />
       <main className="min-h-screen">
         <section className="relative pt-24 pb-0 overflow-hidden">
-          <div className="relative h-[280px] sm:h-[340px] w-full">
-            <div className="absolute inset-0 bg-[#0A0A0A]" />
+          <div className="relative h-[280px] sm:h-[340px] w-full brightness-125 saturate-150">
+            <div className="absolute inset-0 bg-[#0A0A0A]/40" />
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178559!2d55.2708!3d25.1857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f682b1c5b3b3b%3A0x1e3e5f682b1c5b3b!2sBusiness%20Bay%2C%20Dubai!5e0!3m2!1sen!2sae!4v1635000000000!5m2!1sen!2sae"
               width="100%"
@@ -24,11 +24,16 @@ export default function AboutPage() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title="Dubai map"
-              className="absolute inset-0 opacity-40"
+              className="absolute inset-0 opacity-70"
             />
-            <div className="absolute inset-0 bg-[#0A0A0A]/80 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/50 via-transparent to-[#0A0A0A]/60 pointer-events-none" />
+            {/* Pulse hotspot marker */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+              <span className="absolute inset-0 rounded-full bg-gold/40 animate-ping" style={{ animationDuration: "2s" }} />
+              <span className="relative flex h-4 w-4 rounded-full border-2 border-gold bg-gold/80 shadow-lg shadow-gold/30" />
+            </div>
             <div className="absolute bottom-4 left-4 right-4 text-center">
-              <p className="text-gold font-display text-sm uppercase tracking-widest">Dubai · Business Bay</p>
+              <p className="text-gold font-display text-sm uppercase tracking-widest drop-shadow-md">Dubai · Business Bay</p>
             </div>
           </div>
         </section>

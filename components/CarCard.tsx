@@ -31,14 +31,14 @@ export default function CarCard({ car, index }: CarCardProps) {
         animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.45, delay: index * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-luxury-border bg-luxury-card transition-all duration-300 hover:border-luxury-border-hover hover:shadow-glow-lg"
+        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-luxury-border bg-luxury-card transition-all duration-300 hover:border-luxury-border-hover hover:shadow-[0_0_40px_rgba(212,175,55,0.22)] hover:-translate-y-1"
       >
         <Link href={`/car/${car.car_id}`} className="relative block aspect-[16/10] w-full overflow-hidden bg-charcoal">
           <Image
             src={imgSrc || getCarImageFallbackUrl(car)}
             alt={car.title}
             fill
-            className="object-cover object-center scale-110 transition-transform duration-500 group-hover:scale-[1.15]"
+            className="car-image-zoom transition-transform duration-500 group-hover:scale-[1.15]"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             onError={() => setImgSrc(getCarImageFallbackUrl(car))}
             unoptimized={(imgSrc || "").startsWith("/static_images")}
@@ -55,22 +55,23 @@ export default function CarCard({ car, index }: CarCardProps) {
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {spin360Url && (
-              <button
+              <motion.button
                 type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   setShow360(true);
                 }}
-                className="rounded-lg border border-gold/50 px-4 py-2 text-sm font-medium text-gold hover:bg-gold/10 transition-colors"
+                whileTap={{ scale: 0.95 }}
+                className="rounded-lg border border-gold/50 px-4 py-2.5 text-sm font-medium text-gold hover:bg-gold/10 transition-colors min-h-[44px] touch-manipulation"
               >
                 View 360°
-              </button>
+              </motion.button>
             )}
             <Link
               href={`/car/${car.car_id}`}
-              className="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-matte-black hover:shadow-glow transition-all"
+              className="rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-matte-black hover:shadow-glow transition-all inline-flex min-h-[44px] touch-manipulation items-center"
             >
-              View Details
+              <motion.span whileTap={{ scale: 0.95 }}>View Details</motion.span>
             </Link>
           </div>
         </div>

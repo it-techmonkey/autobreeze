@@ -12,8 +12,10 @@ export default function CarsPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-[#0A0A0A] pt-24">
-        <FleetSection />
+      <main className="min-h-screen bg-[#0A0A0A] pt-24 overflow-x-hidden" id="cars-page">
+        <div className="min-h-[50vh]">
+          <FleetSection enableReveal={false} />
+        </div>
       </main>
       <Footer />
     </>

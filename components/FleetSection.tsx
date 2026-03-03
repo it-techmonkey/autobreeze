@@ -51,9 +51,11 @@ function filterCars(
 interface FleetSectionProps {
   /** When set, show only this many featured cars and a "View All Cars" button (e.g. 4 on home). */
   featuredLimit?: number;
+  /** When false, render without RevealOnScroll so content shows immediately (e.g. on /cars page). */
+  enableReveal?: boolean;
 }
 
-export default function FleetSection({ featuredLimit }: FleetSectionProps) {
+export default function FleetSection({ featuredLimit, enableReveal = true }: FleetSectionProps) {
   const [activeCategory, setActiveCategory] = useState<CategoryId>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [capacityFilter, setCapacityFilter] = useState<string>("all");
@@ -64,23 +66,41 @@ export default function FleetSection({ featuredLimit }: FleetSectionProps) {
   const displayCars = featuredLimit != null ? filteredCars.slice(0, featuredLimit) : filteredCars;
   const hasMore = featuredLimit != null && filteredCars.length > featuredLimit;
 
-  return (
-    <section id="fleet" className="py-20 bg-[#0A0A0A]">
-      <RevealOnScroll as="div" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <p className="font-sans text-sm uppercase tracking-[0.3em] text-gold mb-2">
-            Catalog
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-            Our Fleet
-          </h2>
-          <div className="mx-auto mt-4 h-1 w-16 bg-gradient-to-r from-gold to-gold-champagne rounded-full" />
-        </motion.div>
+  const headingBlock = (
+    <div className="text-center mb-12">
+      <p className="font-sans text-sm uppercase tracking-[0.3em] text-gold mb-2">
+        Catalog
+      </p>
+      <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+        Our Fleet
+      </h2>
+      <div className="mx-auto mt-4 h-1 w-16 bg-gradient-to-r from-gold to-gold-champagne rounded-full" />
+    </div>
+  );
+
+  const sectionContent = (
+    <>
+      <section id="fleet" className="py-20 bg-[#0A0A0A]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {enableReveal ? (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px 0px" }}
+            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="text-center mb-12"
+          >
+            <p className="font-sans text-sm uppercase tracking-[0.3em] text-gold mb-2">
+              Catalog
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+              Our Fleet
+            </h2>
+            <div className="mx-auto mt-4 h-1 w-16 bg-gradient-to-r from-gold to-gold-champagne rounded-full" />
+          </motion.div>
+        ) : (
+          headingBlock
+        )}
 
         <div className="mb-8">
           <div className="relative max-w-md mx-auto mb-6">
@@ -107,7 +127,7 @@ export default function FleetSection({ featuredLimit }: FleetSectionProps) {
                 key={value}
                 type="button"
                 onClick={() => setCapacityFilter(value)}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition-all min-h-[40px] ${
+                className={`rounded-full px-4 py-2.5 text-sm font-medium transition-all min-h-[44px] touch-manipulation ${
                   capacityFilter === value
                     ? "bg-gold/20 text-gold border border-gold/50"
                     : "border border-white/20 text-white/80 hover:border-gold/40 hover:text-gold"
@@ -146,13 +166,24 @@ export default function FleetSection({ featuredLimit }: FleetSectionProps) {
           <div className="mt-10 text-center">
             <Link
               href="/cars"
-              className="inline-flex items-center justify-center rounded-full border-2 border-gold px-8 py-3.5 text-sm font-semibold text-gold hover:bg-gold hover:text-matte-black transition-all duration-300"
+              className="inline-flex items-center justify-center rounded-full border-2 border-gold px-8 py-3.5 text-sm font-semibold text-gold hover:bg-gold hover:text-matte-black transition-all duration-300 min-h-[48px] touch-manipulation"
             >
-              View All Cars
+              <motion.span whileTap={{ scale: 0.95 }}>View All Cars</motion.span>
             </Link>
           </div>
         )}
-      </RevealOnScroll>
-    </section>
+        </div>
+      </section>
+    </>
+  );
+
+  if (!enableReveal) {
+    return sectionContent;
+  }
+
+  return (
+    <RevealOnScroll as="div" className="w-full">
+      {sectionContent}
+    </RevealOnScroll>
   );
 }

@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="bg-[#0A0A0A]">
+      <main className="bg-[#0A0A0A] overflow-x-hidden">
         <Hero />
         <FleetSection featuredLimit={4} />
         <BookNowSection />

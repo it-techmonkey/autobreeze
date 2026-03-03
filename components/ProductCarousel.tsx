@@ -92,7 +92,7 @@ export default function ProductCarousel({
     <div className="flex flex-col gap-4">
       {/* Main viewer */}
       <div
-        className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] touch-pan-y"
+        className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] touch-pan-y touch-manipulation"
         onPointerDown={handleDragStart}
         onPointerUp={handleDragEnd}
         onPointerLeave={handleDragEnd}
@@ -147,7 +147,7 @@ export default function ProductCarousel({
                   }
                   alt={`${carTitle} – view ${currentIndex + 1}`}
                   fill
-                  className="object-cover object-center scale-110"
+                  className="car-image-zoom"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   unoptimized={(currentImageUrl || "").startsWith("/static_images")}
                   onError={(e) => {
@@ -256,7 +256,7 @@ export default function ProductCarousel({
                     src={item.url}
                     alt=""
                     fill
-                    className="object-cover object-[center_20%]"
+                    className="car-image-zoom"
                     sizes="80px"
                     unoptimized={item.url.startsWith("/static_images")}
                   />

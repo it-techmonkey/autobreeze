@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  @apply bg-matte-black text-white antialiased;
+  @apply bg-matte-black text-white antialiased overflow-x-hidden;
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
@@ -44,5 +44,11 @@ body {
 
   .glass-panel-strong {
     @apply bg-white/10 backdrop-blur-2xl border border-gold/20;
+  }
+
+  /* Watermark protection: zoom and crop so corner logos (e.g. dubizzle) stay hidden */
+  .car-image-zoom {
+    @apply object-cover scale-110;
+    object-position: center 22%;
   }
 }

@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCarousel from "@/components/ProductCarousel";
 import KeyFeatures from "@/components/KeyFeatures";
+import PerformanceAndInterior from "@/components/PerformanceAndInterior";
 import CarDetailBooking from "@/components/CarDetailBooking";
 
 const S3_CAR_BASE = "https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/car";
@@ -76,6 +77,10 @@ export default async function CarDetailPage({ params }: PageProps) {
 
           <div className="mt-14 lg:mt-16">
             <KeyFeatures car={car} />
+          </div>
+
+          <div className="mt-10">
+            <PerformanceAndInterior car={car} />
           </div>
 
           {(car.description || car.section1_description || car.key_features) && (

@@ -1,16 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { scrollReveal, scrollRevealTransition } from "@/lib/motion";
 
-const defaultVariants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const defaultTransition = {
-  duration: 0.6,
-  ease: [0.25, 0.46, 0.45, 0.94],
-};
+const defaultVariants = scrollReveal;
+const defaultTransition = scrollRevealTransition;
 
 interface RevealOnScrollProps {
   children: React.ReactNode;
