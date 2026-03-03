@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
+import ClientProviders from "@/components/ClientProviders";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -17,6 +18,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "AutoBreeze | Premium Car Rental",
   description: "Luxury car rental in Dubai. Experience premium vehicles with world-class service.",
+  icons: {
+    icon: "/img/logo.png",
+    apple: "/img/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -27,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body className="font-sans min-h-screen bg-matte-black">
-        {children}
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

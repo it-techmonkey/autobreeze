@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { faq } from "@/lib/faq";
+import RevealOnScroll from "./RevealOnScroll";
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section id="faq" className="py-20 bg-[#0A0A0A]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <RevealOnScroll className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -93,7 +94,7 @@ export default function FAQSection() {
             })}
           </div>
         </motion.div>
-      </div>
+      </RevealOnScroll>
     </section>
   );
 }

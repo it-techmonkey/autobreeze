@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCarousel from "@/components/ProductCarousel";
 import KeyFeatures from "@/components/KeyFeatures";
+import CarDetailBooking from "@/components/CarDetailBooking";
 
 const S3_CAR_BASE = "https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/car";
 
@@ -67,30 +68,8 @@ export default async function CarDetailPage({ params }: PageProps) {
               </h1>
               <p className="mt-2 text-white/70">Up to {car.capacity} seats</p>
 
-              <div className="mt-8 flex flex-wrap gap-4 rounded-xl border border-white/10 bg-charcoal/50 p-6">
-                <div>
-                  <p className="text-xs uppercase tracking-wider text-gold">Daily</p>
-                  <p className="font-display text-xl font-semibold text-white">{car.daily_price}</p>
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-wider text-gold">Weekly</p>
-                  <p className="font-display text-xl font-semibold text-white">{car.weekly_price}</p>
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-wider text-gold">Monthly</p>
-                  <p className="font-display text-xl font-semibold text-white">{car.monthly_price}</p>
-                </div>
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link
-                  href="https://wa.me/971527074847"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-gold px-8 py-4 font-semibold text-matte-black hover:shadow-glow transition-all"
-                >
-                  Book Now
-                </Link>
+              <div className="mt-8">
+                <CarDetailBooking car={car} />
               </div>
             </div>
           </div>

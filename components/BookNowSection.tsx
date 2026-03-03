@@ -3,6 +3,7 @@
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { cars } from "@/lib/cars";
+import RevealOnScroll from "./RevealOnScroll";
 
 const WHATSAPP_NUMBER = "971527074847";
 
@@ -53,7 +54,7 @@ export default function BookNowSection() {
 
   return (
     <section className="border-t border-white/10 py-20 bg-[#0A0A0A]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <RevealOnScroll className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -166,7 +167,7 @@ export default function BookNowSection() {
             </button>
           </div>
         </motion.form>
-      </div>
+      </RevealOnScroll>
     </section>
   );
 }

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import RevealOnScroll from "./RevealOnScroll";
 
 const LOGO_SRC = "/img/logo.png";
 
@@ -75,7 +76,7 @@ const item = {
 export default function WhyUsSection() {
   return (
     <section id="whyus" className="py-20 bg-[#0A0A0A]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <RevealOnScroll className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -119,7 +120,7 @@ export default function WhyUsSection() {
             </motion.article>
           ))}
         </motion.div>
-      </div>
+      </RevealOnScroll>
     </section>
   );
 }

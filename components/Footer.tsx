@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Mail, MapPin, Phone } from "lucide-react";
 
-const FOOTER_LOGO = "/img/logoblack.png";
+const FOOTER_LOGO = "/img/logo.png";
+
+const GOOGLE_MAPS_URL =
+  "https://www.google.com/maps/search/?api=1&query=906+Park+Lane+Park+Regis+Business+Bay+Dubai";
 
 const SOCIAL_LINKS = [
   { href: "https://www.instagram.com/autobreezecar", label: "Instagram" },
@@ -63,23 +67,46 @@ export default function Footer() {
             <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-gold">
               Contact Us
             </h4>
-            <ul className="mt-4 space-y-2 text-sm text-white/70">
-              <li>
+            <ul className="mt-4 space-y-3 text-sm text-white/70">
+              <li className="flex items-center gap-3">
+                <span className="rounded-lg border border-white/10 bg-white/5 p-2 text-gold/90">
+                  <Mail className="h-4 w-4" aria-hidden />
+                </span>
                 <a href="mailto:info@autobreezecarrental.com" className="hover:text-gold transition-colors">
                   info@autobreezecarrental.com
                 </a>
               </li>
-              <li>
+              <li className="flex items-center gap-3">
+                <span className="rounded-lg border border-white/10 bg-white/5 p-2 text-gold/90">
+                  <Phone className="h-4 w-4" aria-hidden />
+                </span>
                 <a href="tel:+971246724786" className="hover:text-gold transition-colors">
                   +971 2467 24786
                 </a>
               </li>
-              <li>
-                <span className="block mt-1">906, Park Lane, Park Regis Business Bay, Dubai</span>
+              <li className="flex items-start gap-3">
+                <span className="rounded-lg border border-white/10 bg-white/5 p-2 text-gold/90 shrink-0">
+                  <MapPin className="h-4 w-4" aria-hidden />
+                </span>
+                <a
+                  href={GOOGLE_MAPS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gold transition-colors"
+                >
+                  906, Park Lane, Park Regis Business Bay, Dubai
+                </a>
               </li>
-              <li className="flex flex-wrap gap-3 pt-2">
+              <li className="flex flex-wrap gap-2 pt-2">
                 {SOCIAL_LINKS.map(({ href, label }) => (
-                  <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-gold transition-colors" aria-label={label}>
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 p-2.5 text-white/70 transition-all duration-300 hover:border-gold/40 hover:text-gold hover:shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                    aria-label={label}
+                  >
                     {label}
                   </a>
                 ))}

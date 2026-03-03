@@ -12,27 +12,45 @@ export default function AboutPage() {
     <>
       <Navbar />
       <main className="min-h-screen">
-        <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <section className="relative pt-24 pb-0 overflow-hidden">
+          <div className="relative h-[280px] sm:h-[340px] w-full">
+            <div className="absolute inset-0 bg-[#0A0A0A]" />
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178559!2d55.2708!3d25.1857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f682b1c5b3b3b%3A0x1e3e5f682b1c5b3b!2sBusiness%20Bay%2C%20Dubai!5e0!3m2!1sen!2sae!4v1635000000000!5m2!1sen!2sae"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Dubai map"
+              className="absolute inset-0 opacity-40"
+            />
+            <div className="absolute inset-0 bg-[#0A0A0A]/80 pointer-events-none" />
+            <div className="absolute bottom-4 left-4 right-4 text-center">
+              <p className="text-gold font-display text-sm uppercase tracking-widest">Dubai · Business Bay</p>
+            </div>
+          </div>
+        </section>
+        <section className="relative pt-16 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-gold/5 to-transparent" />
-          <div className="absolute inset-0 glass-panel-strong rounded-none opacity-30" aria-hidden />
           <div className="relative mx-auto max-w-3xl text-center">
             <p className="font-sans text-sm uppercase tracking-[0.3em] text-gold mb-2">Our Story</p>
             <h1 className="font-display text-4xl sm:text-5xl font-bold text-white">About Us</h1>
-            <p className="mt-6 text-lg text-white/80 leading-relaxed">
-              AutoBreeze offers premium car rental in Dubai. We combine luxury vehicles with
-              reliable service so you can focus on the road.
-            </p>
           </div>
         </section>
         <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16 text-white/80 space-y-6">
           <p className="leading-relaxed">
-            Based in Dubai, we provide a curated fleet of luxury sedans, SUVs, and premium
-            vehicles for daily, weekly, and monthly rental. Our team is dedicated to making
-            every rental smooth and memorable.
+            Welcome to AutoBreeze Car Rental in Dubai! We are a trusted and reliable rental company that provides a wide range of vehicles for all your long-term car rental needs. Our goal is to make your rental experience a seamless and stress-free one.
           </p>
           <p className="leading-relaxed">
-            For inquiries or bookings, reach out via our contact details or WhatsApp. We look
-            forward to serving you.
+            Mission statement: At AutoBreeze Car Rental, we strive to provide flexible, reliable, and affordable long-term car rentals tailored to meet the unique needs of each customer. We are committed to delivering exceptional service and ensuring customer satisfaction by offering a wide range of high-quality vehicles.
+          </p>
+          <p className="leading-relaxed">
+            At AutoBreeze Car Rental, we prioritize safety and cleanliness, with all our vehicles regularly maintained and thoroughly cleaned. Our team of experienced professionals is here to assist you in finding the perfect vehicle to suit your needs and budget.
+          </p>
+          <p className="leading-relaxed">
+            With our commitment to top-notch customer service and hassle-free rental experiences, AutoBreeze Car Rental ensures that you stay on the road with confidence and ease. Drive with us, where your journey is our priority.
           </p>
         </section>
       </main>

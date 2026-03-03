@@ -4,12 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useBookModal } from "@/contexts/BookModalContext";
 
 const LOGO_SRC = "/img/logo.png";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { openBookModal } = useBookModal();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -64,14 +66,13 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden md:block">
-          <Link
-            href="https://wa.me/971527074847"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={() => { openBookModal(); setMobileOpen(false); }}
             className="inline-flex items-center justify-center rounded-full border-2 border-gold px-6 py-2.5 text-sm font-semibold text-gold hover:bg-gold hover:text-matte-black transition-all duration-300"
           >
             Book Now
-          </Link>
+          </button>
         </div>
 
         <button
@@ -109,15 +110,13 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="https://wa.me/971527074847"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full border-2 border-gold px-6 py-3 text-center font-semibold text-gold"
-                onClick={() => setMobileOpen(false)}
+              <button
+                type="button"
+                onClick={() => { openBookModal(); setMobileOpen(false); }}
+                className="rounded-full border-2 border-gold px-6 py-3 text-center font-semibold text-gold w-full"
               >
                 Book Now
-              </Link>
+              </button>
             </nav>
           </motion.div>
         )}
