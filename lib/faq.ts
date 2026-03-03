@@ -26,7 +26,7 @@ export const faq: FAQItem[] = [
   },
   {
     qua: "Can I smoke in the rental car?",
-    ans: "The AutoBreeze fleet is strictly non-smoking. Renters and their passengers are not permitted to smoke in any AutoBreeze rental cars. AutoBreeze takes reports of smoking very seriously. If smoke is detected in a returned vehicle, the renter is subject to a fine of up to AED 500.",
+    ans: "The AutoBreeze fleet is strictly non-smoking. Renters and their passengers are not permitted to smoke in any AutoBreeze rental cars. AutoBreeze takes reports of smoking very seriously. If smoke is detected in a returned vehicle, the renter is subject to a fine of up to 500 د.إ.",
   },
   {
     qua: "Is there an age requirement to rent a car from AutoBreeze Car Rental?",
