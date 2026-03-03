@@ -6,6 +6,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import type { Car } from "@/lib/cars";
 import { getCarImageUrl, getCarImageFallbackUrl } from "@/lib/carImageUtils";
+import Price from "./Price";
 import { getSpin360Url } from "@/lib/spin360";
 import { useState } from "react";
 import ThreeSixtyViewer from "./ThreeSixtyViewer";
@@ -51,7 +52,7 @@ export default function CarCard({ car, index }: CarCardProps) {
             {car.title}
           </h3>
           <p className="mt-1 text-sm text-white/70">
-            From {car.daily_price} / day
+            From <Price value={car.daily_price} symbolSize={14} /> / day
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {spin360Url && (

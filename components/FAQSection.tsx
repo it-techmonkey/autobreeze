@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { faq } from "@/lib/faq";
 import RevealOnScroll from "./RevealOnScroll";
+import DirhamSymbol from "./DirhamSymbol";
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -83,7 +84,12 @@ export default function FAQSection() {
                       >
                         <div className="px-5 pb-4 sm:px-6 sm:pb-5 pt-0">
                           <p className="text-white/85 text-sm sm:text-base leading-relaxed">
-                            {item.ans}
+                            {item.ans.split(" د.إ").map((part, i) => (
+                              <span key={i}>
+                                {i > 0 && <DirhamSymbol size={16} className="align-middle mx-0.5" />}
+                                {part}
+                              </span>
+                            ))}
                           </p>
                         </div>
                       </motion.div>

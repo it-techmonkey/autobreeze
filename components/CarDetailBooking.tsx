@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useBookModal } from "@/contexts/BookModalContext";
 import type { Car } from "@/lib/cars";
+import Price from "./Price";
 
 type PlanKey = "Daily" | "Weekly" | "Monthly";
 
@@ -37,7 +38,7 @@ export default function CarDetailBooking({ car }: { car: Car }) {
         ))}
       </div>
       <div className="flex items-center gap-4">
-        <p className="font-display text-2xl font-semibold text-white">{priceMap[plan]}</p>
+        <p className="font-display text-2xl font-semibold text-white"><Price value={priceMap[plan]} symbolSize={22} /></p>
         <button
           type="button"
           onClick={() => openBookModal(car.title, plan)}
