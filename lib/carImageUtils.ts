@@ -55,7 +55,6 @@ const CAR_STATIC_IMAGE_MAP: Record<number, { folder: string; image: string }> = 
   21: { folder: "BMW X5", image: "DSC_0039.jpg" },
   13: { folder: "Cadillac", image: "DSC_0002.jpg" },
   14: { folder: "Chevy Trailblazer", image: "DSC_0019.jpg" },
-  7: { folder: "Jeep", image: "IMG_6948.jpg" },
   22: { folder: "Jeep", image: "IMG_6948.jpg" },
   15: { folder: "Infinity QX 50", image: "IMG_6972.jpg" },
   18: { folder: "Honda HR-V", image: "DSC_0035.jpg" },
@@ -64,6 +63,11 @@ const CAR_STATIC_IMAGE_MAP: Record<number, { folder: string; image: string }> = 
   20: { folder: "MG HS", image: "DSC_0041.jpg" },
   19: { folder: "Nissan X-TRAIL", image: "IMG_6033.jpg" },
   24: { folder: "Renault Koleos", image: "DSC_0002.jpg" },
+  25: { folder: "Ford Mustang", image: "DSC_0020.jpg" },
+  26: { folder: "Genesis G70", image: "_MG_1824.jpg" },
+  27: { folder: "Genesis G70 white", image: "_MG_1841.jpg" },
+  28: { folder: "Jetour T2", image: "IMG_6008.jpg" },
+  29: { folder: "Lexus IS 350", image: "IMG_1686.jpg" },
 };
 
 const S3_CAR_BASE =

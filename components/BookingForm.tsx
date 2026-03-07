@@ -2,8 +2,55 @@
 
 import { useState, useEffect, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { CalendarDays, Clock, MapPin, User, Phone, Car } from "lucide-react";
 import { cars } from "@/lib/cars";
+import DatePickerInput from "./DatePickerInput";
+import AddressWithMapPicker from "./AddressWithMapPicker";
+
+const iconClass = "h-4 w-4 text-gold/80 shrink-0";
+function IconCalendar({ className }: { className?: string }) {
+  return (
+    <svg className={className ?? iconClass} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" />
+      <path d="M3 10h18" /><path d="M8 14h.01" /><path d="M12 14h.01" /><path d="M16 14h.01" /><path d="M8 18h.01" /><path d="M12 18h.01" /><path d="M16 18h.01" />
+    </svg>
+  );
+}
+function IconClock({ className }: { className?: string }) {
+  return (
+    <svg className={className ?? iconClass} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
+    </svg>
+  );
+}
+function IconMapPin({ className }: { className?: string }) {
+  return (
+    <svg className={className ?? iconClass} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+}
+function IconUser({ className }: { className?: string }) {
+  return (
+    <svg className={className ?? iconClass} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+    </svg>
+  );
+}
+function IconPhone({ className }: { className?: string }) {
+  return (
+    <svg className={className ?? iconClass} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+    </svg>
+  );
+}
+function IconCar({ className }: { className?: string }) {
+  return (
+    <svg className={className ?? iconClass} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9C2.6 9.2 2 10.5 2 12v4c0 .6.4 1 1 1h2" />
+      <circle cx="7" cy="17" r="2" /><path d="M9 17h6" /><circle cx="17" cy="17" r="2" />
+    </svg>
+  );
+}
 
 const WHATSAPP_NUMBER = "971527074847";
 
@@ -118,30 +165,30 @@ export default function BookingForm({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor={`${idPrefix}-from`} className="flex items-center gap-2 text-sm font-medium text-white/80 mb-1.5">
-            <CalendarDays className="h-4 w-4 text-gold/80" aria-hidden />
+            <IconCalendar />
             From
           </label>
-          <input
+          <DatePickerInput
             id={`${idPrefix}-from`}
-            type="date"
-            required
             value={fromDate}
-            onChange={(e) => setFromDate(e.target.value)}
+            onChange={setFromDate}
+            required
             className={inputClass}
+            min={(() => { const d = new Date(); d.setHours(0,0,0,0); return d.toISOString().slice(0, 10); })()}
           />
         </div>
         <div>
           <label htmlFor={`${idPrefix}-to`} className="flex items-center gap-2 text-sm font-medium text-white/80 mb-1.5">
-            <CalendarDays className="h-4 w-4 text-gold/80" aria-hidden />
+            <IconCalendar />
             To
           </label>
-          <input
+          <DatePickerInput
             id={`${idPrefix}-to`}
-            type="date"
-            required
             value={toDate}
-            onChange={(e) => setToDate(e.target.value)}
+            onChange={setToDate}
+            required
             className={inputClass}
+            min={fromDate || undefined}
           />
         </div>
       </div>
@@ -149,7 +196,7 @@ export default function BookingForm({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor={`${idPrefix}-pickup-time`} className="flex items-center gap-2 text-sm font-medium text-white/80 mb-1.5">
-            <Clock className="h-4 w-4 text-gold/80" aria-hidden />
+            <IconClock />
             Pickup Time
           </label>
           <select
@@ -168,7 +215,7 @@ export default function BookingForm({
         </div>
         <div>
           <label htmlFor={`${idPrefix}-dropoff-time`} className="flex items-center gap-2 text-sm font-medium text-white/80 mb-1.5">
-            <Clock className="h-4 w-4 text-gold/80" aria-hidden />
+            <IconClock />
             Drop-off Time
           </label>
           <select
@@ -189,22 +236,21 @@ export default function BookingForm({
 
       <div>
         <label htmlFor={`${idPrefix}-address`} className="flex items-center gap-2 text-sm font-medium text-white/80 mb-1.5">
-          <MapPin className="h-4 w-4 text-gold/80" aria-hidden />
+          <IconMapPin />
           Address
         </label>
-        <input
+        <AddressWithMapPicker
           id={`${idPrefix}-address`}
-          type="text"
           value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="Delivery or collection location"
+          onChange={setAddress}
           className={inputClass}
+          placeholder="Delivery or collection location"
         />
       </div>
 
       <div>
         <label htmlFor={`${idPrefix}-name`} className="flex items-center gap-2 text-sm font-medium text-white/80 mb-1.5">
-          <User className="h-4 w-4 text-gold/80" aria-hidden />
+          <IconUser />
           Full Name
         </label>
         <input
@@ -219,7 +265,7 @@ export default function BookingForm({
       </div>
       <div>
         <label htmlFor={`${idPrefix}-phone`} className="flex items-center gap-2 text-sm font-medium text-white/80 mb-1.5">
-          <Phone className="h-4 w-4 text-gold/80" aria-hidden />
+          <IconPhone />
           Phone Number
         </label>
         <input
@@ -234,7 +280,7 @@ export default function BookingForm({
       </div>
       <div>
         <label htmlFor={`${idPrefix}-car`} className="flex items-center gap-2 text-sm font-medium text-white/80 mb-1.5">
-          <Car className="h-4 w-4 text-gold/80" aria-hidden />
+          <IconCar />
           Select Car
         </label>
         <select

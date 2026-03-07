@@ -3,8 +3,15 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search } from "lucide-react";
 import { cars, CATEGORIES } from "@/lib/cars";
+
+function IconSearch() {
+  return (
+    <svg className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+    </svg>
+  );
+}
 import type { Car } from "@/lib/cars";
 import FilterBar from "./FilterBar";
 import CarCard from "./CarCard";
@@ -104,7 +111,7 @@ export default function FleetSection({ featuredLimit, enableReveal = true }: Fle
 
         <div className="mb-8">
           <div className="relative max-w-md mx-auto mb-6">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" aria-hidden />
+            <IconSearch />
             <input
               type="search"
               value={searchQuery}
