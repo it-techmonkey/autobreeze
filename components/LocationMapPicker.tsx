@@ -9,7 +9,9 @@ const NOMINATIM_URL = "https://nominatim.openstreetmap.org/reverse?format=json&l
 
 async function reverseGeocode(lat: number, lon: number): Promise<string> {
   const url = NOMINATIM_URL.replace("{lat}", String(lat)).replace("{lon}", String(lon));
-  const res = await fetch(url, { headers: { "Accept-Language": "en" } });
+  const res = await fetch(url, {
+    headers: { "Accept-Language": "en-US, en; q=0.9", "Accept": "application/json" },
+  });
   if (!res.ok) return `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
   const data = (await res.json()) as { address?: Record<string, string>; display_name?: string };
   const a = data.address || {};
@@ -20,7 +22,8 @@ async function reverseGeocode(lat: number, lon: number): Promise<string> {
     a.state,
     a.country,
   ].filter(Boolean);
-  return parts.length ? parts.join(", ") : (data.display_name as string) || `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+  const built = parts.length ? parts.join(", ") : (data.display_name as string) || "";
+  return built || `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
 }
 
 interface LocationMapPickerProps {

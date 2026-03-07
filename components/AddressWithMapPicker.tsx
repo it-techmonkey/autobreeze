@@ -1,9 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 const LocationMapPicker = dynamic(() => import("./LocationMapPicker"), { ssr: false });
+
+const LEAFLET_SCRIPT = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+const LEAFLET_CSS = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+
+function preloadLeaflet() {
+  if (typeof document === "undefined") return;
+  if (!document.querySelector(`link[href="${LEAFLET_CSS}"]`)) {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = LEAFLET_CSS;
+    document.head.appendChild(link);
+  }
+  if (!document.querySelector(`script[src="${LEAFLET_SCRIPT}"]`)) {
+    const script = document.createElement("script");
+    script.src = LEAFLET_SCRIPT;
+    script.async = true;
+    document.head.appendChild(script);
+  }
+}
 
 function MapPinIcon({ className }: { className?: string }) {
   return (
@@ -30,6 +49,10 @@ export default function AddressWithMapPicker({
   placeholder = "Delivery or collection location",
 }: AddressWithMapPickerProps) {
   const [mapOpen, setMapOpen] = useState(false);
+
+  useEffect(() => {
+    preloadLeaflet();
+  }, []);
 
   return (
     <div className="space-y-2">

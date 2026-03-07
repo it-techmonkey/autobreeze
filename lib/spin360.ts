@@ -17,6 +17,7 @@ const CAR_SPIN_360_URLS: Record<number, string> = {
   27: "https://spins.impel.io/dubizzlenonturntable/mz_autobreeze_genesis_white",
   28: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_jetour",
   29: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_lexus_is350",
+  30: "https://spins.impel.io/dubizzlenonturntable/mz_autobreeze_mazdacx30",
 };
 
 const CAR_SPIN_360_BY_TITLE: Record<string, string> = {

@@ -37,6 +37,7 @@ export const CAR_SPECS: Record<number, { horsepower?: string; transmission?: str
   27: { horsepower: "365 HP", transmission: "Automatic", fuel_type: "Petrol" },
   28: { horsepower: "187 HP", transmission: "DCT", fuel_type: "Petrol" },
   29: { horsepower: "311 HP", transmission: "Automatic", fuel_type: "Petrol" },
+  30: { horsepower: "186 HP", transmission: "Automatic", fuel_type: "Petrol" },
 };
 
 export const CATEGORIES = [
@@ -206,5 +207,15 @@ export const cars: Car[] = [
     daily_price: "275 د.إ",
     weekly_price: "1650 د.إ",
     monthly_price: "6000 د.إ",
+  },
+  {
+    car_id: 30,
+    title: "Mazda CX-30",
+    img: "cx30.png",
+    category: "suv",
+    capacity: 5,
+    daily_price: "185 د.إ",
+    weekly_price: "1120 د.إ",
+    monthly_price: "3600 د.إ",
   },
 ];

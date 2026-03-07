@@ -68,6 +68,7 @@ const CAR_STATIC_IMAGE_MAP: Record<number, { folder: string; image: string }> = 
   27: { folder: "Genesis G70 white", image: "_MG_1844.jpg" },
   28: { folder: "Jetour T2", image: "IMG_6009.jpg" },
   29: { folder: "Lexus IS 350", image: "IMG_1686.jpg" },
+  30: { folder: "Mazda CX-30", image: "DSC_0001.jpg" },
 };
 
 const S3_CAR_BASE =
