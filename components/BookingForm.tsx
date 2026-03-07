@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { cars } from "@/lib/cars";
 import DatePickerInput from "./DatePickerInput";
 import AddressWithMapPicker from "./AddressWithMapPicker";
+import TimeInput from "./TimeInput";
 
 const iconClass = "h-4 w-4 text-gold/80 shrink-0";
 function IconCalendar({ className }: { className?: string }) {
@@ -76,16 +77,6 @@ function buildWhatsAppUrl(
     "Phone: " + phone,
   ].join("\n");
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-}
-
-const TIME_OPTIONS: string[] = [];
-for (let h = 0; h < 24; h++) {
-  for (let m = 0; m < 60; m += 30) {
-    const period = h < 12 ? "AM" : "PM";
-    const hour = h % 12 || 12;
-    const min = m.toString().padStart(2, "0");
-    TIME_OPTIONS.push(`${hour}:${min} ${period}`);
-  }
 }
 
 const inputClass =
@@ -199,38 +190,22 @@ export default function BookingForm({
             <IconClock />
             Pickup Time
           </label>
-          <select
+          <TimeInput
             id={`${idPrefix}-pickup-time`}
             value={pickupTime}
-            onChange={(e) => setPickupTime(e.target.value)}
-            className={inputClass}
-          >
-            <option value="">Select time</option>
-            {TIME_OPTIONS.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
+            onChange={setPickupTime}
+          />
         </div>
         <div>
           <label htmlFor={`${idPrefix}-dropoff-time`} className="flex items-center gap-2 text-sm font-medium text-white/80 mb-1.5">
             <IconClock />
             Drop-off Time
           </label>
-          <select
+          <TimeInput
             id={`${idPrefix}-dropoff-time`}
             value={dropoffTime}
-            onChange={(e) => setDropoffTime(e.target.value)}
-            className={inputClass}
-          >
-            <option value="">Select time</option>
-            {TIME_OPTIONS.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
+            onChange={setDropoffTime}
+          />
         </div>
       </div>
 

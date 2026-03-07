@@ -91,7 +91,7 @@ export default function LocationMapPicker({ onSelect, onClose }: LocationMapPick
           remove: () => void;
           on: (event: string, fn: (e: { latlng: { lat: number; lng: number } }) => void) => void;
         };
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
           attribution: "",
         }).addTo(map);
         const marker = L.marker(DUBAI_CENTER).addTo(map) as { setLatLng: (latlng: [number, number]) => void };
