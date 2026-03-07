@@ -91,7 +91,7 @@ export default function LocationMapPicker({ onSelect, onClose }: LocationMapPick
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution: "",
         }).addTo(map);
-        const marker = L.marker(DUBAI_CENTER).addTo(map);
+        const marker = L.marker(DUBAI_CENTER).addTo(map) as { setLatLng: (latlng: [number, number]) => void };
         markerRef.current = marker;
         mapRef.current = map;
         map.on("click", (e: { latlng: { lat: number; lng: number } }) => {
