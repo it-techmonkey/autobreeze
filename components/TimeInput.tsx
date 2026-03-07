@@ -21,28 +21,13 @@ function formatTime(hour: number, minute: number, ampm: "AM" | "PM"): string {
   return `${h}:${m.toString().padStart(2, "0")} ${ampm}`;
 }
 
-// Clock face: 12 at top, angles clockwise in degrees. Hour 1 = 30°, etc.
-function hourToAngle(hour: number) {
-  return ((hour % 12) - 1) * 30;
-}
-
-// Map pixel click to viewBox coords; return region (inner = hour, outer = minute) and angle 0-360 from 12 o'clock.
-function getClickRegion(
-  offsetX: number,
-  offsetY: number,
-  width: number,
-  height: number,
-  cx: number,
-  cy: number,
-  radius: number
-): { region: "hour" | "minute"; angle: number } {
+// Map pixel click to angle 0-360 (degrees from 12 o'clock).
+function getClickAngle(offsetX: number, offsetY: number, width: number, height: number, cx: number, cy: number): number {
   const relX = (offsetX / width) * (cx * 2) - cx;
   const relY = (offsetY / height) * (cy * 2) - cy;
   let angle = (Math.atan2(relX, -relY) * 180) / Math.PI;
   if (angle < 0) angle += 360;
-  const distance = Math.sqrt(relX * relX + relY * relY);
-  const region = distance < radius * 0.5 ? "hour" : "minute";
-  return { region, angle };
+  return angle;
 }
 
 function angleToHour(angle: number): number {
@@ -71,6 +56,7 @@ export default function TimeInput({ id, value, onChange, className = "" }: TimeI
   const [hour, setHour] = useState(parsed.hour);
   const [minute, setMinute] = useState(parsed.minute);
   const [ampm, setAmPm] = useState<"AM" | "PM">(parsed.ampm);
+  const [mode, setMode] = useState<"hour" | "minute">("hour");
 
   useEffect(() => {
     const p = parseTime(value || "12:00 AM");
@@ -118,8 +104,8 @@ export default function TimeInput({ id, value, onChange, className = "" }: TimeI
     const rect = el.getBoundingClientRect();
     const offsetX = e.clientX - rect.left;
     const offsetY = e.clientY - rect.top;
-    const { region, angle } = getClickRegion(offsetX, offsetY, rect.width, rect.height, cx, cy, radius);
-    if (region === "hour") {
+    const angle = getClickAngle(offsetX, offsetY, rect.width, rect.height, cx, cy);
+    if (mode === "hour") {
       const h = angleToHour(angle);
       setHour(h);
       onChange(formatTime(h, minute, ampm));
@@ -151,8 +137,35 @@ export default function TimeInput({ id, value, onChange, className = "" }: TimeI
       className="fixed z-[200] rounded-xl border border-white/20 bg-charcoal shadow-2xl p-4 w-[200px]"
       style={{ top: popoverStyle.top, left: popoverStyle.left }}
     >
-      <div className="flex flex-col items-center gap-4">
-        {/* Clock face: click inner for hour, outer for minute */}
+      <div className="flex flex-col items-center gap-3">
+        {/* Current time display */}
+        <div className="text-xl font-semibold text-white tabular-nums">
+          {hour}:{minute.toString().padStart(2, "0")} {ampm}
+        </div>
+
+        {/* Hour / Minute toggle */}
+        <div className="flex rounded-lg border border-white/20 overflow-hidden shrink-0">
+          <button
+            type="button"
+            onClick={() => setMode("hour")}
+            className={`px-3 py-1.5 text-sm font-medium transition ${
+              mode === "hour" ? "bg-gold text-matte-black" : "text-white/70 hover:text-white bg-white/5"
+            }`}
+          >
+            Hour
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("minute")}
+            className={`px-3 py-1.5 text-sm font-medium transition ${
+              mode === "minute" ? "bg-gold text-matte-black" : "text-white/70 hover:text-white bg-white/5"
+            }`}
+          >
+            Minute
+          </button>
+        </div>
+
+        {/* Simple clock: 12 numbers in hour mode, 60 ticks in minute mode. No hands. */}
         <div
           ref={clockContainerRef}
           role="button"
@@ -163,7 +176,7 @@ export default function TimeInput({ id, value, onChange, className = "" }: TimeI
           }}
           className="relative cursor-pointer rounded-full border-2 border-white/20 select-none"
           style={{ width: clockSize, height: clockSize }}
-          aria-label="Select time using clock"
+          aria-label={mode === "hour" ? "Click to select hour" : "Click to select minute"}
         >
           <svg
             width={clockSize}
@@ -172,52 +185,63 @@ export default function TimeInput({ id, value, onChange, className = "" }: TimeI
             className="rounded-full pointer-events-none"
             aria-hidden
           >
-            <circle cx={cx} cy={cy} r={radius} fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-            {/* Minute ticks (60) */}
-            {Array.from({ length: 60 }, (_, i) => {
-              const a = (i * 6 * Math.PI) / 180;
-              const r = i % 5 === 0 ? radius - 4 : radius - 2;
-              const x1 = cx + radius * Math.sin(a);
-              const y1 = cy - radius * Math.cos(a);
-              const x2 = cx + r * Math.sin(a);
-              const y2 = cy - r * Math.cos(a);
-              return (
-                <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.25)" strokeWidth={i % 5 === 0 ? 1.5 : 1} />
-              );
-            })}
-            {[12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((h) => {
-              const angle = (h - 1) * 30;
-              const rad = (angle * Math.PI) / 180;
-              const x = cx + (radius * 0.65) * Math.sin(rad);
-              const y = cy - (radius * 0.65) * Math.cos(rad);
-              const isSelected = hour === h;
-              return (
-                <g key={h}>
-                  <circle cx={x} cy={y} r={isSelected ? 12 : 8} fill={isSelected ? "rgb(212,175,55)" : "rgba(255,255,255,0.15)"} />
-                  <text x={x} y={y + 4} textAnchor="middle" className="text-sm" fill={isSelected ? "#1a1a1a" : "rgba(255,255,255,0.9)"}>
-                    {h}
-                  </text>
-                </g>
-              );
-            })}
-            <line
-              x1={cx}
-              y1={cy}
-              x2={cx + (radius * 0.45) * Math.sin((hourToAngle(hour) * Math.PI) / 180)}
-              y2={cy - (radius * 0.45) * Math.cos((hourToAngle(hour) * Math.PI) / 180)}
-              stroke="rgba(212,175,55,0.9)"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <line
-              x1={cx}
-              y1={cy}
-              x2={cx + (radius * 0.72) * Math.sin((minute * 6 * Math.PI) / 180)}
-              y2={cy - (radius * 0.72) * Math.cos((minute * 6 * Math.PI) / 180)}
-              stroke="rgba(255,255,255,0.8)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
+            <circle cx={cx} cy={cy} r={radius} fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+
+            {mode === "minute" ? (
+              /* Minute mode: 60 ticks, highlight selected */
+              <>
+                {Array.from({ length: 60 }, (_, i) => {
+                  const a = (i * 6 * Math.PI) / 180;
+                  const isSelected = minute === i;
+                  const r = isSelected ? radius - 2 : radius - 6;
+                  const x1 = cx + radius * Math.sin(a);
+                  const y1 = cy - radius * Math.cos(a);
+                  const x2 = cx + r * Math.sin(a);
+                  const y2 = cy - r * Math.cos(a);
+                  return (
+                    <line
+                      key={i}
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                      stroke={isSelected ? "rgb(212,175,55)" : "rgba(255,255,255,0.3)"}
+                      strokeWidth={isSelected ? 3 : 1}
+                    />
+                  );
+                })}
+              </>
+            ) : (
+              /* Hour mode: 12 numbers only */
+              <>
+                {[12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((h) => {
+                  const angle = (h - 1) * 30;
+                  const rad = (angle * Math.PI) / 180;
+                  const x = cx + (radius * 0.7) * Math.sin(rad);
+                  const y = cy - (radius * 0.7) * Math.cos(rad);
+                  const isSelected = hour === h;
+                  return (
+                    <g key={h}>
+                      <circle
+                        cx={x}
+                        cy={y}
+                        r={14}
+                        fill={isSelected ? "rgb(212,175,55)" : "transparent"}
+                      />
+                      <text
+                        x={x}
+                        y={y + 5}
+                        textAnchor="middle"
+                        className="text-sm font-medium"
+                        fill={isSelected ? "#1a1a1a" : "rgba(255,255,255,0.95)"}
+                      >
+                        {h}
+                      </text>
+                    </g>
+                  );
+                })}
+              </>
+            )}
           </svg>
         </div>
 
