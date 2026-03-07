@@ -61,7 +61,7 @@ export default function LocationMapPicker({ onSelect, onClose }: LocationMapPick
         L.Icon.Default.mergeOptions({
           imagePath: "https://unpkg.com/leaflet@1.9.4/dist/images/",
         });
-        const map = L.map(containerRef.current).setView(DUBAI_CENTER, 12);
+        const map = L.map(containerRef.current).setView(DUBAI_CENTER, 12) as { remove: () => void };
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution: "© OpenStreetMap",
         }).addTo(map);
