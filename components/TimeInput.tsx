@@ -94,7 +94,7 @@ export default function TimeInput({ id, value, onChange, className = "" }: TimeI
 
   return (
     <div
-      className={`flex items-center gap-2 rounded-xl border border-white/20 bg-matte-black/50 px-3 py-2 min-h-[48px] sm:min-h-[44px] ${className}`}
+      className={`flex items-center gap-2 rounded-xl border border-white/20 bg-matte-black/50 px-3 py-2 min-h-[48px] sm:min-h-[44px] min-w-0 ${className}`}
       role="group"
       aria-labelledby={`${id}-label`}
     >
@@ -134,12 +134,12 @@ export default function TimeInput({ id, value, onChange, className = "" }: TimeI
         inputMode="numeric"
       />
 
-      {/* AM/PM toggle */}
-      <div className="flex rounded-lg border border-white/20 overflow-hidden shrink-0" role="group" aria-label="AM or PM">
+      {/* AM/PM toggle - fixed width so it never overflows */}
+      <div className="flex w-[5rem] rounded-lg border border-white/20 overflow-hidden shrink-0" role="group" aria-label="AM or PM">
         <button
           type="button"
           onClick={() => setAmPm("AM")}
-          className={`min-w-[2.75rem] px-3 py-2.5 text-sm font-medium transition ${
+          className={`flex-1 min-w-0 py-2.5 px-1.5 text-sm font-medium transition text-center ${
             ampm === "AM" ? "bg-gold text-matte-black" : "text-white/70 hover:text-white hover:bg-white/5"
           }`}
           aria-pressed={ampm === "AM"}
@@ -150,7 +150,7 @@ export default function TimeInput({ id, value, onChange, className = "" }: TimeI
         <button
           type="button"
           onClick={() => setAmPm("PM")}
-          className={`min-w-[2.75rem] px-3 py-2.5 text-sm font-medium transition ${
+          className={`flex-1 min-w-0 py-2.5 px-1.5 text-sm font-medium transition text-center ${
             ampm === "PM" ? "bg-gold text-matte-black" : "text-white/70 hover:text-white hover:bg-white/5"
           }`}
           aria-pressed={ampm === "PM"}
