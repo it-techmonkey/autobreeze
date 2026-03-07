@@ -15,7 +15,7 @@ const CAR_SPIN_360_URLS: Record<number, string> = {
   25: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_mustang",
   26: "https://spins.impel.io/dubizzlenonturntable/mz_autobreeze_genesis",
   27: "https://spins.impel.io/dubizzlenonturntable/mz_autobreeze_genesis_white",
-  28: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_t2",
+  28: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_jetour",
   29: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_lexus_is350",
 };
 
@@ -34,7 +34,7 @@ const CAR_SPIN_360_BY_TITLE: Record<string, string> = {
   "genesis g70 white":
     "https://spins.impel.io/dubizzlenonturntable/mz_autobreeze_genesis_white",
   genesis: "https://spins.impel.io/dubizzlenonturntable/mz_autobreeze_genesis",
-  "jetour t2": "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_t2",
+  "jetour t2": "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_jetour",
   "lexus is350":
     "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_lexus_is350",
   mg: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_mg",
