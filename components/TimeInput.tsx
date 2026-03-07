@@ -134,31 +134,18 @@ export default function TimeInput({ id, value, onChange, className = "" }: TimeI
         inputMode="numeric"
       />
 
-      {/* AM/PM toggle - fixed width so it never overflows */}
-      <div className="flex w-[5rem] rounded-lg border border-white/20 overflow-hidden shrink-0" role="group" aria-label="AM or PM">
-        <button
-          type="button"
-          onClick={() => setAmPm("AM")}
-          className={`flex-1 min-w-0 py-2.5 px-1.5 text-sm font-medium transition text-center ${
-            ampm === "AM" ? "bg-gold text-matte-black" : "text-white/70 hover:text-white hover:bg-white/5"
-          }`}
-          aria-pressed={ampm === "AM"}
-          aria-label="AM"
-        >
-          AM
-        </button>
-        <button
-          type="button"
-          onClick={() => setAmPm("PM")}
-          className={`flex-1 min-w-0 py-2.5 px-1.5 text-sm font-medium transition text-center ${
-            ampm === "PM" ? "bg-gold text-matte-black" : "text-white/70 hover:text-white hover:bg-white/5"
-          }`}
-          aria-pressed={ampm === "PM"}
-          aria-label="PM"
-        >
-          PM
-        </button>
-      </div>
+      {/* AM/PM dropdown */}
+      <select
+        id={`${id}-ampm`}
+        value={ampm}
+        onChange={(e) => setAmPm(e.target.value as "AM" | "PM")}
+        className={`${baseInputClass} w-[4.5rem] min-w-0 py-2.5 pl-2 pr-7 text-sm font-medium cursor-pointer appearance-none bg-no-repeat bg-[length:1rem] bg-[right_0.35rem_center] shrink-0`}
+        style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.7)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")" }}
+        aria-label="AM or PM"
+      >
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
     </div>
   );
 }
