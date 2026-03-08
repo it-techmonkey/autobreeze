@@ -3,11 +3,11 @@ import type { Car } from "./cars";
 const CAR_SPIN_360_URLS: Record<number, string> = {
   21: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_bmwx5",
   22: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_jeep",
-  9: "https://spins.impel.io/dubizzlenonturntable/mz_autobreeze_mazdacx30",
+  9: "https://spins.impel.io/dubizzlenonturntable/mz_autobreez_mazda_cx30",
   10: "https://spins.impel.io/dubizzlenonturntable/ms_autobrees_cx5",
   13: "https://spins.impel.io/dubizzlenonturntable/ms__autobreez__ct5",
   14: "https://spins.impel.io/dubizzlenonturntable/mz_autobreeze_chevytrailblazer",
-  15: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_infiniti_qx50",
+  15: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_infinity_qx50",
   24: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_koleos",
   19: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_xtrail",
   20: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_mg",
