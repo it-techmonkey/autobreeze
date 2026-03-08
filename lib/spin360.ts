@@ -42,7 +42,7 @@ const CAR_SPIN_360_BY_TITLE: Record<string, string> = {
     "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_infinity_qx50",
   "infinity qx 50":
     "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_infinity_qx50",
-  "mazda cx 30": "https://spins.impel.io/dubizzlenonturntable/mz_autobreez_mazda_cx30",
+  "mazda cx 30": "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_mazda_cx30",
   "mazda cx5": "https://spins.impel.io/dubizzlenonturntable/ms_autobrees_cx5",
   jeep: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_jeep",
   "bmw x5": "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_bmwx5",
