@@ -9,7 +9,7 @@ const BRAND_LOGO_PATHS = [
   "hyundai.png",
   "infiniti.png",
   "jeep.png",
-  "landrovers.png",
+  "tesla3.png",
   "mercidez.png",
   "mg.png",
   "reanult.png",
@@ -22,24 +22,33 @@ const BRAND_LOGO_PATHS = [
 function LogoStrip() {
   return (
     <div className="flex items-center gap-12 shrink-0 pr-12" aria-hidden>
-      {BRAND_LOGO_PATHS.map(({ src, alt }) => (
+      {BRAND_LOGO_PATHS.map(({ src, alt }) => {
+        const isTesla = alt.toLowerCase().startsWith("tesla");
+        return (
         <div
           key={src}
-          className="relative h-12 w-28 shrink-0 flex items-center justify-center opacity-60 transition-all duration-300 hover:opacity-100 grayscale hover:grayscale-0"
+          className={`relative h-12 shrink-0 flex items-center justify-center transition-all duration-300 ${
+            isTesla ? "opacity-90 hover:opacity-100" : "opacity-60 hover:opacity-100 grayscale hover:grayscale-0"
+          } ${
+            isTesla ? "w-24" : "w-28"
+          }`}
         >
           <Image
             src={src}
             alt={alt}
             width={112}
             height={48}
-            className="object-contain w-full h-full"
+            className={`object-contain ${
+              isTesla ? "w-[82%] h-[82%] mix-blend-screen" : "w-full h-full"
+            }`}
             unoptimized
             onError={(e) => {
               e.currentTarget.style.display = "none";
             }}
           />
         </div>
-      ))}
+      );
+      })}
     </div>
   );
 }

@@ -51,7 +51,7 @@ export default function TermsPage() {
               <ul className="list-disc list-outside pl-5 space-y-2 leading-relaxed text-left">
                 <li>Rental fees must be paid upfront or as agreed in the rental contract.</li>
                 <li>Additional charges may apply for late returns, fuel, insurance, or any damages.</li>
-                <li>A refundable security deposit will be held and returned within 10 days, following the vehicle inspection.</li>
+                <li>A refundable security deposit will be held and returned within 3 business days, following the vehicle inspection.</li>
               </ul>
             </article>
 

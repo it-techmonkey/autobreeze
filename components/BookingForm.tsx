@@ -82,6 +82,22 @@ function buildWhatsAppUrl(
 const inputClass =
   "w-full rounded-xl border border-white/20 bg-matte-black/50 px-4 py-3 text-white placeholder-white/40 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition min-h-[48px] text-base sm:min-h-[44px]";
 
+type CountryPhoneOption = { code: string; label: string; flag: string };
+
+const DEFAULT_COUNTRY_PHONE_OPTIONS: CountryPhoneOption[] = [
+  { code: "+971", label: "United Arab Emirates", flag: "🇦🇪" },
+  { code: "+91", label: "India", flag: "🇮🇳" },
+  { code: "+966", label: "Saudi Arabia", flag: "🇸🇦" },
+  { code: "+44", label: "United Kingdom", flag: "🇬🇧" },
+  { code: "+1", label: "United States", flag: "🇺🇸" },
+];
+
+function isoToFlag(iso2: string): string {
+  const code = (iso2 || "").toUpperCase();
+  if (!/^[A-Z]{2}$/.test(code)) return "🏳️";
+  return String.fromCodePoint(...code.split("").map((c) => 127397 + c.charCodeAt(0)));
+}
+
 interface BookingFormProps {
   idPrefix?: string;
   initialCar?: string;
@@ -101,7 +117,11 @@ export default function BookingForm({
   showCancelButton = false,
 }: BookingFormProps) {
   const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneCode, setPhoneCode] = useState("+971");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [countryPhoneOptions, setCountryPhoneOptions] = useState<CountryPhoneOption[]>(
+    DEFAULT_COUNTRY_PHONE_OPTIONS
+  );
   const [selectedCar, setSelectedCar] = useState(initialCar);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -115,11 +135,52 @@ export default function BookingForm({
     if (initialPlan) setPlan(initialPlan);
   }, [initialCar, initialPlan]);
 
+  useEffect(() => {
+    let cancelled = false;
+    const loadCountryCodes = async () => {
+      try {
+        const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd,cca2,flag");
+        if (!res.ok) return;
+        const rows = (await res.json()) as Array<{
+          name?: { common?: string };
+          idd?: { root?: string; suffixes?: string[] };
+          cca2?: string;
+          flag?: string;
+        }>;
+        const options = rows
+          .map((r) => {
+            const root = r.idd?.root || "";
+            const suffix = r.idd?.suffixes?.[0] || "";
+            const code = root && suffix ? `${root}${suffix}` : "";
+            if (!code) return null;
+            return {
+              code,
+              label: r.name?.common || "Unknown",
+              flag: r.flag || isoToFlag(r.cca2 || ""),
+            } as CountryPhoneOption;
+          })
+          .filter((x): x is CountryPhoneOption => Boolean(x))
+          .sort((a, b) => a.label.localeCompare(b.label));
+
+        if (!cancelled && options.length) {
+          setCountryPhoneOptions(options);
+        }
+      } catch {
+        // keep fallback options
+      }
+    };
+    loadCountryCodes();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const carName = selectedCar || "a vehicle";
     const fromTime = pickupTime || "—";
     const toTime = dropoffTime || "—";
+    const phone = `${phoneCode} ${phoneNumber}`.trim();
     const url = buildWhatsAppUrl(carName, fromDate, fromTime, toDate, toTime, address || "—", fullName, phone, plan);
     if (typeof window !== "undefined") {
       try {
@@ -243,15 +304,30 @@ export default function BookingForm({
           <IconPhone />
           Phone Number
         </label>
-        <input
-          id={`${idPrefix}-phone`}
-          type="tel"
-          required
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="+971 ..."
-          className={inputClass}
-        />
+        <div className="flex gap-2">
+          <select
+            id={`${idPrefix}-phone-code`}
+            value={phoneCode}
+            onChange={(e) => setPhoneCode(e.target.value)}
+            className="w-44 sm:w-64 rounded-xl border border-white/20 bg-matte-black/50 px-3 py-3 text-white focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition min-h-[48px] sm:min-h-[44px]"
+            aria-label="Country code"
+          >
+            {countryPhoneOptions.map((opt) => (
+              <option key={opt.code} value={opt.code}>
+                {opt.flag} {opt.label} ({opt.code})
+              </option>
+            ))}
+          </select>
+          <input
+            id={`${idPrefix}-phone`}
+            type="tel"
+            required
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            placeholder="Phone number"
+            className={inputClass}
+          />
+        </div>
       </div>
       <div>
         <label htmlFor={`${idPrefix}-car`} className="flex items-center gap-2 text-sm font-medium text-white/80 mb-1.5">

@@ -20,13 +20,15 @@ export default function ProductCarousel({
   fallbackImg,
 }: ProductCarouselProps) {
   const has360 = Boolean(spin360Url);
-  const totalSlides = has360 ? 1 + imageUrls.length : imageUrls.length;
+  const totalSlides = imageUrls.length + (has360 ? 1 : 0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [load360Iframe, setLoad360Iframe] = useState(false);
   const [zoomOpen, setZoomOpen] = useState(false);
   const dragStartX = useRef(0);
   const touchStartX = useRef(0);
+  const zoomDragStartX = useRef(0);
+  const zoomTouchStartX = useRef(0);
 
   useEffect(() => {
     if (zoomOpen) document.body.style.overflow = "hidden";
@@ -36,14 +38,15 @@ export default function ProductCarousel({
 
   // Lazy-load 360 iframe only after user has been on the 360 slide for 300ms (instant page load).
   useEffect(() => {
-    if (!has360 || currentIndex !== 0) {
+    const is360Slide = has360 && currentIndex === imageUrls.length;
+    if (!is360Slide) {
       setLoad360Iframe(false);
       setIframeLoaded(false);
       return;
     }
     const t = setTimeout(() => setLoad360Iframe(true), 300);
     return () => clearTimeout(t);
-  }, [has360, currentIndex]);
+  }, [has360, currentIndex, imageUrls.length]);
 
   const goTo = useCallback(
     (index: number) => {
@@ -80,13 +83,34 @@ export default function ProductCarousel({
       else goNext();
     }
   };
+  const handleZoomDragStart = (e: React.PointerEvent) => {
+    zoomDragStartX.current = e.clientX;
+  };
+  const handleZoomDragEnd = (e: React.PointerEvent) => {
+    const delta = e.clientX - zoomDragStartX.current;
+    if (Math.abs(delta) > 40) {
+      if (delta > 0) goPrev();
+      else goNext();
+    }
+  };
+  const handleZoomTouchStart = (e: React.TouchEvent) => {
+    zoomTouchStartX.current = e.touches[0].clientX;
+  };
+  const handleZoomTouchEnd = (e: React.TouchEvent) => {
+    const delta = e.changedTouches[0].clientX - zoomTouchStartX.current;
+    if (Math.abs(delta) > 40) {
+      if (delta > 0) goPrev();
+      else goNext();
+    }
+  };
 
-  const is360Active = has360 && currentIndex === 0;
-  const currentImageUrl = imageUrls[has360 ? currentIndex - 1 : currentIndex] || fallbackImg;
+  const is360Active = has360 && currentIndex === imageUrls.length;
+  const currentImageUrl = imageUrls[currentIndex] || fallbackImg;
   const canZoom = !is360Active && currentImageUrl;
-  const thumbnails = has360
-    ? [{ type: "360" as const, label: "360°" }, ...imageUrls.map((url, i) => ({ type: "image" as const, url, index: i }))]
-    : imageUrls.map((url, i) => ({ type: "image" as const, url, index: i }));
+  const thumbnails = [
+    ...imageUrls.map((url) => ({ type: "image" as const, url })),
+    ...(has360 ? [{ type: "360" as const, label: "360°" }] : []),
+  ];
 
   return (
     <div className="flex flex-col gap-4">
@@ -148,6 +172,7 @@ export default function ProductCarousel({
                   alt={`${carTitle} – view ${currentIndex + 1}`}
                   fill
                   className="car-image-zoom"
+                  style={{ objectPosition: "center 16%" }}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   unoptimized={(currentImageUrl || "").startsWith("/static_images")}
                   onError={(e) => {
@@ -218,15 +243,44 @@ export default function ProductCarousel({
               exit={{ scale: 0.95 }}
               className="relative aspect-[16/10] w-full max-w-5xl max-h-[90vh]"
               onClick={(e) => e.stopPropagation()}
+              onPointerDown={handleZoomDragStart}
+              onPointerUp={handleZoomDragEnd}
+              onTouchStart={handleZoomTouchStart}
+              onTouchEnd={handleZoomTouchEnd}
             >
               <Image
                 src={currentImageUrl}
                 alt={`${carTitle} – zoomed`}
                 fill
-                className="object-contain"
+                className="object-cover"
+                style={{ objectPosition: "center 16%" }}
                 sizes="(max-width: 1280px) 100vw, 1280px"
                 unoptimized={currentImageUrl.startsWith("/static_images")}
               />
+              {totalSlides > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={goPrev}
+                    aria-label="Previous image"
+                    className="absolute left-3 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/20 bg-matte-black/80 p-2.5 text-white shadow-lg backdrop-blur-sm transition hover:border-gold/50 hover:bg-gold/20"
+                  >
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={goNext}
+                    aria-label="Next image"
+                    className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/20 bg-matte-black/80 p-2.5 text-white shadow-lg backdrop-blur-sm transition hover:border-gold/50 hover:bg-gold/20"
+                  >
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}
