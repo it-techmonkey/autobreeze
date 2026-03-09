@@ -51,6 +51,8 @@ function IconLinkedin() {
 
 const GOOGLE_MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=906+Park+Lane+Park+Regis+Business+Bay+Dubai";
+const FOOTER_WHATSAPP_URL =
+  "https://wa.me/971527074847?text=Hi%2C%20I%20want%20to%20book%20a%20car.";
 
 const SOCIAL_LINKS = [
   { href: "https://www.instagram.com/autobreezecar", label: "Instagram", Icon: IconInstagram },
@@ -108,7 +110,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="https://wa.me/971527074847" target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-gold transition-colors">
+                <a href={FOOTER_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-gold transition-colors">
                   Book on WhatsApp
                 </a>
               </li>

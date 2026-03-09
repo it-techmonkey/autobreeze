@@ -25,7 +25,6 @@ export const CAR_SPECS: Record<number, { horsepower?: string; transmission?: str
   9: { horsepower: "186 HP", transmission: "Automatic", fuel_type: "Petrol" },
   10: { horsepower: "187 HP", transmission: "Automatic", fuel_type: "Petrol" },
   13: { horsepower: "335 HP", transmission: "Automatic", fuel_type: "Petrol" },
-  14: { horsepower: "228 HP", transmission: "CVT", fuel_type: "Petrol" },
   15: { horsepower: "268 HP", transmission: "CVT", fuel_type: "Petrol" },
   20: { horsepower: "162 HP", transmission: "DCT", fuel_type: "Petrol" },
   19: { horsepower: "181 HP", transmission: "CVT", fuel_type: "Petrol" },
@@ -88,16 +87,6 @@ export const cars: Car[] = [
     monthly_price: "4200 د.إ",
   },
   {
-    car_id: 14,
-    title: "Chevrolet Trailblazer",
-    img: "cheverolet.png",
-    category: "suv",
-    capacity: 5,
-    daily_price: "185 د.إ",
-    weekly_price: "1120 د.إ",
-    monthly_price: "3600 د.إ",
-  },
-  {
     car_id: 15,
     title: "Infinity QX 50",
     img: "qx5.png",
@@ -119,7 +108,7 @@ export const cars: Car[] = [
   },
   {
     car_id: 19,
-    title: "Nissan X Trail",
+    title: "Nissan Xterra",
     img: "trial.png",
     category: "suv",
     capacity: 7,
@@ -129,7 +118,7 @@ export const cars: Car[] = [
   },
   {
     car_id: 22,
-    title: "Jeep",
+    title: "Jeep Gladiator",
     img: "gladitor.png",
     category: "suv",
     capacity: 5,

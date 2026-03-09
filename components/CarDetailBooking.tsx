@@ -27,7 +27,7 @@ export default function CarDetailBooking({ car }: { car: Car }) {
             key={key}
             type="button"
             onClick={() => setPlan(key)}
-            className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all ${
+            className={`rounded-full px-5 py-2.5 text-base leading-none font-semibold transition-all ${
               plan === key
                 ? "bg-gold text-matte-black shadow-glow"
                 : "border border-white/20 text-white/80 hover:border-gold/40 hover:text-gold"
@@ -38,7 +38,7 @@ export default function CarDetailBooking({ car }: { car: Car }) {
         ))}
       </div>
       <div className="flex items-center gap-4">
-        <p className="font-display text-2xl font-semibold text-white"><Price value={priceMap[plan]} symbolSize={22} /></p>
+        <p className="font-display text-2xl font-semibold text-white leading-none"><Price value={priceMap[plan]} symbolSize={24} /></p>
         <button
           type="button"
           onClick={() => openBookModal(car.title, plan)}
