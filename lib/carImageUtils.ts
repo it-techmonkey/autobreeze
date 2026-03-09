@@ -4,14 +4,13 @@ import { BRAND_IMAGES } from "./brandCarousel";
 const TITLE_TO_STATIC_FOLDER: [string, string][] = [
   ["bmw x5", "BMW X5"],
   ["cadillac", "Cadillac"],
-  ["chevrolet trailblazer", "Chevy Trailblazer"],
-  ["chevy trailblazer", "Chevy Trailblazer"],
   ["ford mustang", "Ford Mustang"],
   ["genesis g70 white", "Genesis G70 white"],
   ["genesis g70", "Genesis G70"],
   ["genesis", "Genesis G70"],
   ["infinity qx 50", "Infinity QX 50"],
   ["infiniti qx50", "Infinity QX 50"],
+  ["jeep gladiator", "Jeep"],
   ["jeep", "Jeep"],
   ["jetour t2", "Jetour T2"],
   ["jetour", "Jetour T2"],
@@ -26,13 +25,13 @@ const TITLE_TO_STATIC_FOLDER: [string, string][] = [
   ["mg hs", "MG HS"],
   ["nissan x trail", "Nissan X-TRAIL"],
   ["nissan x-trail", "Nissan X-TRAIL"],
+  ["nissan xterra", "Nissan X-TRAIL"],
   ["renault koleos", "Renault Koleos"],
 ];
 
 const STATIC_FOLDER_DEFAULT_IMAGE: Record<string, string> = {
   "BMW X5": "DSC_0039.jpg",
   Cadillac: "DSC_0002.jpg",
-  "Chevy Trailblazer": "DSC_0019.jpg",
   "Ford Mustang": "DSC_0021.jpg",
   "Genesis G70": "_MG_1826.jpg",
   "Genesis G70 white": "_MG_1844.jpg",
@@ -51,7 +50,6 @@ const STATIC_FOLDER_DEFAULT_IMAGE: Record<string, string> = {
 const CAR_STATIC_IMAGE_MAP: Record<number, { folder: string; image: string }> = {
   21: { folder: "BMW X5", image: "DSC_0039.jpg" },
   13: { folder: "Cadillac", image: "DSC_0002.jpg" },
-  14: { folder: "Chevy Trailblazer", image: "DSC_0019.jpg" },
   22: { folder: "Jeep", image: "IMG_6948.jpg" },
   15: { folder: "Infinity QX 50", image: "IMG_6972.jpg" },
   10: { folder: "Mazda CX-5", image: "DSC_0023.jpg" },
