@@ -144,6 +144,7 @@ export default function ProductCarousel({
                   title={`360° view – ${carTitle}`}
                   src={spin360Url}
                   className="absolute inset-0 h-full w-full border-0"
+                  allow="fullscreen; accelerometer; gyroscope; autoplay; encrypted-media"
                   onLoad={() => setIframeLoaded(true)}
                   style={{ opacity: iframeLoaded ? 1 : 0 }}
                 />
