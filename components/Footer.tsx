@@ -111,7 +111,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href={FOOTER_WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-sm text-white/70 hover:text-gold transition-colors">
-                  Book on WhatsApp
+                  Enquire on WhatsApp
                 </a>
               </li>
             </ul>

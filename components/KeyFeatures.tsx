@@ -78,7 +78,7 @@ export default function KeyFeatures({ car }: KeyFeaturesProps) {
           >
             <span className="text-gold" aria-hidden>{item.icon}</span>
             <span className="text-xs uppercase tracking-wider text-white/60">{item.label}</span>
-            <span className="font-display font-semibold text-white">{item.value}</span>
+            <span className="font-semibold text-white">{item.value}</span>
           </motion.div>
         ))}
       </div>
