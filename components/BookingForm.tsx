@@ -82,14 +82,14 @@ function buildWhatsAppUrl(
 const inputClass =
   "w-full rounded-xl border border-white/20 bg-matte-black/50 px-4 py-3 text-white placeholder-white/40 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition min-h-[48px] text-base sm:min-h-[44px]";
 
-type CountryPhoneOption = { code: string; label: string; flag: string };
+type CountryPhoneOption = { cca2: string; code: string; label: string; flag: string };
 
 const DEFAULT_COUNTRY_PHONE_OPTIONS: CountryPhoneOption[] = [
-  { code: "+971", label: "United Arab Emirates", flag: "🇦🇪" },
-  { code: "+91", label: "India", flag: "🇮🇳" },
-  { code: "+966", label: "Saudi Arabia", flag: "🇸🇦" },
-  { code: "+44", label: "United Kingdom", flag: "🇬🇧" },
-  { code: "+1", label: "United States", flag: "🇺🇸" },
+  { cca2: "AE", code: "+971", label: "United Arab Emirates", flag: "🇦🇪" },
+  { cca2: "IN", code: "+91", label: "India", flag: "🇮🇳" },
+  { cca2: "SA", code: "+966", label: "Saudi Arabia", flag: "🇸🇦" },
+  { cca2: "GB", code: "+44", label: "United Kingdom", flag: "🇬🇧" },
+  { cca2: "US", code: "+1", label: "United States", flag: "🇺🇸" },
 ];
 
 function isoToFlag(iso2: string): string {
@@ -150,13 +150,15 @@ export default function BookingForm({
         const options = rows
           .map((r) => {
             const root = r.idd?.root || "";
-            const suffix = r.idd?.suffixes?.[0] || "";
-            const code = root && suffix ? `${root}${suffix}` : "";
-            if (!code) return null;
+            const suffix = r.idd?.suffixes?.[0] ?? "";
+            const code = root ? (suffix ? `${root}${suffix}` : root) : "";
+            const cca2 = r.cca2 || "";
+            if (!code || !cca2) return null;
             return {
+              cca2,
               code,
               label: r.name?.common || "Unknown",
-              flag: r.flag || isoToFlag(r.cca2 || ""),
+              flag: r.flag || isoToFlag(cca2),
             } as CountryPhoneOption;
           })
           .filter((x): x is CountryPhoneOption => Boolean(x))
@@ -313,7 +315,7 @@ export default function BookingForm({
             aria-label="Country code"
           >
             {countryPhoneOptions.map((opt) => (
-              <option key={opt.code} value={opt.code}>
+              <option key={opt.cca2} value={opt.code}>
                 {opt.flag} {opt.label} ({opt.code})
               </option>
             ))}

@@ -1,11 +1,22 @@
 import type { Car } from "./cars";
 
-/** Single source of truth: car_id -> Impel 360 URL. All listed cars must show 360. */
+/**
+ * CDN base for Impel swipetospin viewers (versioned assets).
+ * Exposed for developers / debug; iframe src uses spins.impel.io URLs (same approach as BMW X5).
+ */
+export const IMPEL_CDN_PREFIX =
+  "https://cdn.impel.io/swipetospin-viewers/dubizzlenonturntable";
+
+/** Mazda CX30: use CDN URL as iframe src (Impel returns null for cdn_image_prefix when embedded here; works on Impel site). */
+export const MAZDA_CX30_CDN_REF =
+  "https://cdn.impel.io/swipetospin-viewers/dubizzlenonturntable/mz_autobreeze_mazdacx30/20251022123031.BEH7OCQE/";
+
+/** Single source of truth: car_id -> Impel 360 URL (spins.impel.io or direct CDN when embed returns null). */
 const CAR_SPIN_360_BY_ID: Record<number, string> = {
   21: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_bmwx5",
   22: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_jeep",
-  9: "https://spins.impel.io/dubizzlenonturntable/mz_autobreeze_mazdacx30",
-  10: "https://spins.impel.io/dubizzlenonturntable/ms_autobrees_cx5",
+  9: MAZDA_CX30_CDN_REF,
+  10: "https://cdn.impel.io/swipetospin-viewers/dubizzlenonturntable/ms_autobrees_cx5/20250711124951.WF7KUXMO/",
   13: "https://spins.impel.io/dubizzlenonturntable/ms__autobreez__ct5",
   15: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_infinity_qx50",
   24: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_koleos",
@@ -16,7 +27,7 @@ const CAR_SPIN_360_BY_ID: Record<number, string> = {
   27: "https://spins.impel.io/dubizzlenonturntable/mz_autobreeze_genesis_white",
   28: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_jetour",
   29: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_lexus_is350",
-  30: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_mazda_cx30",
+  30: MAZDA_CX30_CDN_REF,
 };
 
 /** Fallback: normalized title -> URL (for title-based lookup). Use exact titles from cars array. */
@@ -36,6 +47,7 @@ const CAR_SPIN_360_BY_TITLE: Record<string, string> = {
   "jetour t2": CAR_SPIN_360_BY_ID[28],
   "lexus is 350": CAR_SPIN_360_BY_ID[29],
   "mazda cx-30": CAR_SPIN_360_BY_ID[30],
+  "mazda cx30": CAR_SPIN_360_BY_ID[9],
   "mazda cx-5": CAR_SPIN_360_BY_ID[10],
   "infiniti qx50": CAR_SPIN_360_BY_ID[15],
   "infinity qx50": CAR_SPIN_360_BY_ID[15],
@@ -57,13 +69,16 @@ function normalizeTitle(s: string): string {
 /**
  * Returns the Impel 360° viewer URL for a car, or null if none is configured.
  * Lookup order: car_id (numeric), then id (if present), then title match.
+ * Handles car_id/id as number or string (e.g. from API/JSON).
+ * If 360° only loads for one car, verify in Impel that each spin is published and embeddable.
  */
 export function getSpin360Url(car: Car | null): string | null {
   if (!car) return null;
 
-  const id = Number((car as { car_id?: number; id?: number }).car_id ?? (car as { id?: number }).id);
-  if (!Number.isNaN(id) && CAR_SPIN_360_BY_ID[id] != null) {
-    return CAR_SPIN_360_BY_ID[id];
+  const rawId = (car as { car_id?: number | string; id?: number | string }).car_id ?? (car as { id?: number | string }).id;
+  const id = typeof rawId === "string" ? parseInt(rawId, 10) : Number(rawId);
+  if (Number.isFinite(id) && id >= 0 && id in CAR_SPIN_360_BY_ID) {
+    return CAR_SPIN_360_BY_ID[id as keyof typeof CAR_SPIN_360_BY_ID];
   }
 
   const title = normalizeTitle(car.title || "");

@@ -56,19 +56,22 @@ function filterCars(
 }
 
 interface FleetSectionProps {
+  /** When set, use this list instead of full cars (e.g. home page shows only these). */
+  carsOverride?: Car[];
   /** When set, show only this many featured cars and a "View All Cars" button (e.g. 4 on home). */
   featuredLimit?: number;
   /** When false, render without RevealOnScroll so content shows immediately (e.g. on /cars page). */
   enableReveal?: boolean;
 }
 
-export default function FleetSection({ featuredLimit, enableReveal = true }: FleetSectionProps) {
+export default function FleetSection({ carsOverride, featuredLimit, enableReveal = true }: FleetSectionProps) {
   const [activeCategory, setActiveCategory] = useState<CategoryId>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [capacityFilter, setCapacityFilter] = useState<string>("all");
+  const sourceCars = carsOverride ?? cars;
   const filteredCars = useMemo(
-    () => filterCars(cars, activeCategory, searchQuery, capacityFilter),
-    [activeCategory, searchQuery, capacityFilter]
+    () => filterCars(sourceCars, activeCategory, searchQuery, capacityFilter),
+    [sourceCars, activeCategory, searchQuery, capacityFilter]
   );
   const displayCars = featuredLimit != null ? filteredCars.slice(0, featuredLimit) : filteredCars;
   const hasMore = featuredLimit != null && filteredCars.length > featuredLimit;

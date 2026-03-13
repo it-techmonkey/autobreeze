@@ -9,8 +9,20 @@ const nextConfig = {
       },
     ],
   },
-  // Allow loading static_images from parent public if symlinked
   transpilePackages: [],
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Permissions-Policy",
+            value: "accelerometer=(self \"https://spins.impel.io\" \"https://cdn.impel.io\"), gyroscope=(self \"https://spins.impel.io\" \"https://cdn.impel.io\")",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
