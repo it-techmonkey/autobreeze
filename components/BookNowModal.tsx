@@ -44,7 +44,7 @@ export default function BookNowModal({ isOpen, onClose, initialCar = "", initial
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 id="book-now-title" className="font-display text-2xl font-bold text-white">
-                  Book Now
+                  Enquire Now
                 </h2>
                 <button
                   type="button"

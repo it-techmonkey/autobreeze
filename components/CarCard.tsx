@@ -39,7 +39,7 @@ export default function CarCard({ car, index }: CarCardProps) {
             src={imgSrc || getCarImageFallbackUrl(car)}
             alt={car.title}
             fill
-            className="car-image-zoom transition-transform duration-500 group-hover:scale-[1.15]"
+            className="car-card-image transition-transform duration-500 group-hover:scale-[1.15]"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             onError={() => setImgSrc(getCarImageFallbackUrl(car))}
             unoptimized={(imgSrc || "").startsWith("/static_images")}

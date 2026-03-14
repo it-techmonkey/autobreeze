@@ -90,7 +90,7 @@ export default function Navbar() {
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center justify-center rounded-full border-2 border-gold px-6 py-2.5 text-sm font-semibold text-gold hover:bg-gold hover:text-matte-black transition-all duration-300"
           >
-            Book Now
+            Enquire Now
           </motion.button>
         </div>
 
@@ -137,7 +137,7 @@ export default function Navbar() {
                 whileTap={{ scale: 0.95 }}
                 className="rounded-full border-2 border-gold px-6 py-3 text-center font-semibold text-gold w-full"
               >
-                Book Now
+                Enquire Now
               </motion.button>
             </nav>
           </motion.div>

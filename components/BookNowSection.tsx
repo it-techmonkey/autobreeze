@@ -18,7 +18,7 @@ export default function BookNowSection() {
             Reserve
           </p>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
-            Book Now
+            Enquire Now
           </h2>
           <p className="mt-3 text-white/70 max-w-xl mx-auto">
             Choose your dates, car, and we&apos;ll confirm your booking via WhatsApp.

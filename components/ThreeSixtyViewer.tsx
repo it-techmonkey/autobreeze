@@ -40,10 +40,6 @@ export default function ThreeSixtyViewer({
     };
   }, [isOpen, url]);
 
-  const openInNewTab = () => {
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -67,25 +63,16 @@ export default function ThreeSixtyViewer({
             <h3 className="font-display text-lg font-semibold text-white">
               360° View – {title}
             </h3>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={openInNewTab}
-                className="rounded-lg border border-gold/50 px-3 py-1.5 text-sm text-gold hover:bg-gold/10"
-              >
-                Open in new tab
-              </button>
-              <button
-                type="button"
-                onClick={onClose}
-                aria-label="Close"
-                className="rounded-lg p-2 text-white/80 hover:text-white hover:bg-white/10"
-              >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="rounded-lg p-2 text-white/80 hover:text-white hover:bg-white/10"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
 
           <div className="relative aspect-video w-full bg-matte-black">
@@ -93,13 +80,6 @@ export default function ThreeSixtyViewer({
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white/70">
                 <div className="h-10 w-10 animate-spin rounded-full border-2 border-gold/30 border-t-gold" />
                 <p className="text-sm">{iframeSrc ? "Loading 360° viewer…" : "Preparing viewer…"}</p>
-                <button
-                  type="button"
-                  onClick={openInNewTab}
-                  className="text-sm text-gold underline hover:no-underline"
-                >
-                  Open in new tab instead
-                </button>
               </div>
             )}
             {iframeSrc && (
@@ -107,6 +87,7 @@ export default function ThreeSixtyViewer({
                 title={`360 view ${title}`}
                 src={iframeSrc}
                 className="absolute inset-0 h-full w-full border-0"
+                allow="fullscreen; accelerometer; gyroscope; autoplay; encrypted-media"
                 onLoad={() => {
                   setLoaded(true);
                   loadedRef.current = true;

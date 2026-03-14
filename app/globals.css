@@ -51,4 +51,10 @@ body {
     @apply object-cover scale-110;
     object-position: center 22%;
   }
+
+  /* Home page cards: fill card, slightly zoomed, centered on all sides */
+  .car-card-image {
+    @apply object-cover;
+    object-position: center;
+  }
 }

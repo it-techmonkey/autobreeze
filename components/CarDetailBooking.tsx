@@ -38,13 +38,13 @@ export default function CarDetailBooking({ car }: { car: Car }) {
         ))}
       </div>
       <div className="flex items-center gap-4">
-        <p className="font-display text-2xl font-semibold text-white leading-none"><Price value={priceMap[plan]} symbolSize={24} /></p>
+        <p className="text-2xl font-semibold text-white leading-none"><Price value={priceMap[plan]} symbolSize={24} /></p>
         <button
           type="button"
           onClick={() => openBookModal(car.title, plan)}
           className="inline-flex items-center justify-center rounded-full bg-gold px-8 py-4 font-semibold text-matte-black hover:shadow-glow transition-all"
         >
-          Book Now
+          Enquire Now
         </button>
       </div>
     </div>
