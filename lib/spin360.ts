@@ -17,6 +17,10 @@ const CAR_SPIN_360_BY_ID: Record<number, string> = {
   28: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_jetour",
   29: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_lexus_is350",
   30: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_mazda_cx30",
+  31: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_zrv",
+  32: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_xtrail",
+  34: "https://spins.impel.io/dubizzlenonturntable/ar-automancar-tesla-white",
+  33: "https://spins.impel.io/dubizzlenonturntable/ms_autobreez_t2"
 };
 
 /** Fallback: normalized title -> URL (for title-based lookup). Use exact titles from cars array. */

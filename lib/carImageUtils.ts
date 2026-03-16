@@ -12,8 +12,8 @@ const TITLE_TO_STATIC_FOLDER: [string, string][] = [
   ["infiniti qx50", "Infinity QX 50"],
   ["jeep gladiator", "Jeep"],
   ["jeep", "Jeep"],
-  ["jetour t2", "Jetour T2"],
-  ["jetour", "Jetour T2"],
+  ["jetour t2", "Jetour T2 White"],
+  ["jetour", "Jetour T2 White"],
   ["lexus is 350", "Lexus IS 350"],
   ["lexus is350", "Lexus IS 350"],
   ["mazda cx30", "MAZDA CX30"],
@@ -23,10 +23,15 @@ const TITLE_TO_STATIC_FOLDER: [string, string][] = [
   ["mazda cx 5", "Mazda CX-5"],
   ["mazda cx-5", "Mazda CX-5"],
   ["mg hs", "MG HS"],
-  ["nissan x trail", "Nissan X-TRAIL"],
-  ["nissan x-trail", "Nissan X-TRAIL"],
-  ["nissan xterra", "Nissan X-TRAIL"],
+  ["nissan x trail", "Nissan Xterra"],
+  ["nissan x-trail", "Nissan Xterra"],
+  ["nissan xterra", "Nissan Xterra"],
   ["renault koleos", "Renault Koleos"],
+  ["Honda Z-RV", "Honda Z-RV"],
+  ["Nissan XTrail", "Nissan Xtrail"],
+  ["Jetour", "Jetour T2"],
+  ["tesla", "Tesla"],
+
 ];
 
 const STATIC_FOLDER_DEFAULT_IMAGE: Record<string, string> = {
@@ -37,14 +42,18 @@ const STATIC_FOLDER_DEFAULT_IMAGE: Record<string, string> = {
   "Genesis G70 white": "_MG_1844.jpg",
   "Infinity QX 50": "IMG_6972.jpg",
   Jeep: "IMG_6948.jpg",
-  "Jetour T2": "IMG_6009.jpg",
+  "Jetour T2 White": "IMG_6009.jpg",
   "Lexus IS 350": "IMG_1686.jpg",
   "MAZDA CX30": "IMG_6924.jpg",
   "Mazda CX-5": "DSC_0023.jpg",
   "Mazda CX-30": "DSC_0001.jpg",
   "MG HS": "DSC_0041.jpg",
-  "Nissan X-TRAIL": "IMG_6033.jpg",
+  "Nissan Xterra": "IMG_6033.jpg",
   "Renault Koleos": "DSC_0002.jpg",
+  "Honda Z-RV": "DSC_0024.jpg",
+  "Nissan Xtrail": "DSC_0016.jpg",
+  "Jetour T2": "IMG_1662.jpg",
+  "Tesla": "DSC_0005.jpg",
 };
 
 const CAR_STATIC_IMAGE_MAP: Record<number, { folder: string; image: string }> = {
@@ -55,14 +64,18 @@ const CAR_STATIC_IMAGE_MAP: Record<number, { folder: string; image: string }> = 
   10: { folder: "Mazda CX-5", image: "DSC_0023.jpg" },
   9: { folder: "MAZDA CX30", image: "IMG_6924.jpg" },
   20: { folder: "MG HS", image: "DSC_0041.jpg" },
-  19: { folder: "Nissan X-TRAIL", image: "IMG_6033.jpg" },
+  19: { folder: "Nissan Xterra", image: "IMG_6033.jpg" },
   24: { folder: "Renault Koleos", image: "DSC_0002.jpg" },
   25: { folder: "Ford Mustang", image: "DSC_0021.jpg" },
   26: { folder: "Genesis G70", image: "_MG_1826.jpg" },
   27: { folder: "Genesis G70 white", image: "_MG_1844.jpg" },
-  28: { folder: "Jetour T2", image: "IMG_6009.jpg" },
+  28: { folder: "Jetour T2 White", image: "IMG_6009.jpg" },
   29: { folder: "Lexus IS 350", image: "IMG_1686.jpg" },
   30: { folder: "Mazda CX-30", image: "DSC_0001.jpg" },
+  31: { folder: "Honda Z-RV", image: "DSC_0024.jpg" },
+  32: { folder: "Nissan Xtrail", image: "DSC_0016.jpg" },
+  33: { folder: "Jetour T2", image: "IMG_1662.jpg" },
+  34: { folder: "Tesla", image: "DSC_0005.jpg" },
 };
 
 const S3_CAR_BASE =
