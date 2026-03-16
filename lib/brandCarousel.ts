@@ -172,7 +172,7 @@ export const BRAND_IMAGES: Record<string, string[]> = {
     "IMG_6961.jpg",
     
   ],
-  "Jetour T2": [
+  "Jetour T2 White": [
     "IMG_6008.jpg",
     "IMG_6009.jpg",
     "IMG_6010.jpg",
