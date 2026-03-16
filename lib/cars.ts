@@ -58,7 +58,7 @@ export const cars: Car[] = [
   },
   {
     car_id: 9,
-    title: "Mazda CX 30",
+    title: "Mazda CX 30 (Red)",
     img: "cx30.png",
     category: "suv",
     capacity: 5,
@@ -148,7 +148,7 @@ export const cars: Car[] = [
   },
   {
     car_id: 26,
-    title: "Genesis G70",
+    title: "Genesis G70 (Red)",
     img: "genesis.png",
     category: "luxury",
     capacity: 5,
@@ -158,7 +158,7 @@ export const cars: Car[] = [
   },
   {
     car_id: 27,
-    title: "Genesis G70 White",
+    title: "Genesis G70 (White)",
     img: "genesis_white.png",
     category: "luxury",
     capacity: 5,
@@ -168,7 +168,7 @@ export const cars: Car[] = [
   },
   {
     car_id: 28,
-    title: "Jetour T2",
+    title: "Jetour T2 (White)",
     img: "jetour.png",
     category: "suv",
     capacity: 5,
@@ -188,7 +188,7 @@ export const cars: Car[] = [
   },
   {
     car_id: 30,
-    title: "Mazda CX-30",
+    title: "Mazda CX-30 (Black)",
     img: "cx30.png",
     category: "suv",
     capacity: 5,
@@ -218,7 +218,7 @@ export const cars: Car[] = [
   },
   {
     car_id: 33,
-    title: "Jetour T2",
+    title: "Jetour T2 (Black)",
     img: "jetour.png",
     category: "suv",
     capacity: 5,

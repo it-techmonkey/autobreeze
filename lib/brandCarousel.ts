@@ -361,8 +361,8 @@ export const BRAND_IMAGES: Record<string, string[]> = {
     "DSC_0041.jpg",
   ],
   "Nissan Xtrail": [
-    "DSC_0016.jpg",
     "DSC_0001.jpg",
+    "DSC_0016.jpg",
     "DSC_0002.jpg",
     "DSC_0003.jpg",
     "DSC_0004.jpg",
@@ -390,8 +390,6 @@ export const BRAND_IMAGES: Record<string, string[]> = {
     "IMG_1663.jpg",
     "IMG_1664.jpg",
     "IMG_1665.jpg",
-
-
     "IMG_1673.jpg",
     "IMG_1674.jpg",
     "IMG_1675.jpg",
@@ -411,12 +409,11 @@ export const BRAND_IMAGES: Record<string, string[]> = {
   ],
   "Tesla": [
     "DSC_0001.jpg",
-    "DSC_0002.jpg",
-    "DSC_0024.jpg",
-    "DSC_0025.jpg",
-    "DSC_0004.jpg",
+    // "DSC_0024.jpg",
     "DSC_0005.jpg",
+    "DSC_0004.jpg",
     "DSC_0003.jpg",
+    "DSC_0025.jpg",
     "DSC_0012.jpg",
     "DSC_0013.jpg",
     "DSC_0014.jpg",
@@ -431,6 +428,7 @@ export const BRAND_IMAGES: Record<string, string[]> = {
     "DSC_0017.jpg",
     "DSC_0018.jpg",
     "DSC_0011.jpg",
+    "DSC_0002.jpg",
     "DSC_0009.jpg",
     "DSC_0006.jpg",
     "DSC_0007.jpg",
