@@ -36,6 +36,8 @@ export const CAR_SPECS: Record<number, { horsepower?: string; transmission?: str
   28: { horsepower: "187 HP", transmission: "DCT", fuel_type: "Petrol" },
   29: { horsepower: "311 HP", transmission: "Automatic", fuel_type: "Petrol" },
   30: { horsepower: "186 HP", transmission: "Automatic", fuel_type: "Petrol" },
+  35: { horsepower: "284 HP", transmission: "CVT", fuel_type: "Petrol" },
+  36: { horsepower: "187 HP", transmission: "Automatic", fuel_type: "Petrol" },
 };
 
 export const CATEGORIES = [
@@ -235,6 +237,26 @@ export const cars: Car[] = [
     daily_price: "350 د.إ",
     weekly_price: "2000 د.إ",
     monthly_price: "7500 د.إ",
+  },
+  {
+    car_id: 35,
+    title: "Nissan Pathfinder (Blue)",
+    img: "pathfinder.png",
+    category: "suv",
+    capacity: 7,
+    daily_price: "280 د.إ",
+    weekly_price: "1400 د.إ",
+    monthly_price: "5000 د.إ",
+  },
+  {
+    car_id: 36,
+    title: "Mazda CX-5 (Blue)",
+    img: "cx5.png",
+    category: "suv",
+    capacity: 5,
+    daily_price: "200 د.إ",
+    weekly_price: "1200 د.إ",
+    monthly_price: "3600 د.إ",
   },
 
 ];

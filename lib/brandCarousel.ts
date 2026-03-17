@@ -433,8 +433,45 @@ export const BRAND_IMAGES: Record<string, string[]> = {
     "DSC_0006.jpg",
     "DSC_0007.jpg",
     "DSC_0008.jpg",
+
+  ],
+  "Nissan Pathfinder Blue": [
+    "_MG_0925.jpg",
+    "_MG_0930.jpg",
+    "_MG_0931.jpg",
+    "_MG_0932.jpg",
+    "_MG_0917.jpg",
+    "_MG_0918.jpg",
     
-  ]
+    "_MG_0920.jpg",
+    "_MG_0921.jpg",
+    "_MG_0923.jpg",
+    "_MG_0919.jpg",
+    "_MG_0915.jpg",
+    "_MG_0916.jpg",
+    "_MG_0924.jpg",
+    "_MG_0926.jpg",
+    "_MG_0927.jpg",
+    "_MG_0928.jpg",
+    
+  ],
+  "Mazda CX-5 Blue": [
+    "DSC_0001.jpg",
+    "DSC_0002.jpg",
+    "DSC_0003.jpg",
+    "DSC_0004.jpg",
+    "DSC_0014.jpg",
+    "DSC_0016.jpg",
+    "DSC_0019.jpg",
+    "DSC_0020.jpg",
+    "DSC_0021.jpg",
+    "DSC_0017.jpg",
+    "DSC_0012.jpg",
+    "DSC_0010.jpg",
+    "DSC_0005.jpg",
+    "DSC_0006.jpg",
+    "DSC_0007.jpg",
+  ],
 };
 
 export type BrandSlug = keyof typeof BRAND_IMAGES;
