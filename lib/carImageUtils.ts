@@ -34,6 +34,7 @@ const TITLE_TO_STATIC_FOLDER: [string, string][] = [
   ["nissan pathfinder blue", "Nissan Pathfinder Blue"],
   ["mazda cx-5 blue", "Mazda CX-5 Blue"],
   ["mazda cx 5 blue", "Mazda CX-5 Blue"],
+  ["jetour t2 black", "Jetour T2 Black"],
 
 ];
 
@@ -59,6 +60,7 @@ const STATIC_FOLDER_DEFAULT_IMAGE: Record<string, string> = {
   "Tesla": "DSC_0005.jpg",
   "Nissan Pathfinder Blue": "_MG_0932.jpg",
   "Mazda CX-5 Blue": "DSC_0004.jpg",
+  "Jetour T2 Black": "DSC_0025.jpg",
 };
 
 const CAR_STATIC_IMAGE_MAP: Record<number, { folder: string; image: string }> = {
@@ -83,6 +85,7 @@ const CAR_STATIC_IMAGE_MAP: Record<number, { folder: string; image: string }> = 
   34: { folder: "Tesla", image: "DSC_0005.jpg" },
   35: { folder: "Nissan Pathfinder Blue", image: "_MG_0932.jpg" },
   36: { folder: "Mazda CX-5 Blue", image: "DSC_0004.jpg" },
+  37: { folder: "Jetour T2 Black", image: "DSC_0025.jpg" },
 };
 
 const S3_CAR_BASE =

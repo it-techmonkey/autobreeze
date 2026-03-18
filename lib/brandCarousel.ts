@@ -472,6 +472,24 @@ export const BRAND_IMAGES: Record<string, string[]> = {
     "DSC_0006.jpg",
     "DSC_0007.jpg",
   ],
+  "Jetour T2 Black": [
+    "DSC_0022.jpg",
+    "DSC_0023.jpg",
+    "DSC_0024.jpg",
+    "DSC_0025.jpg",
+    "DSC_0029.jpg",
+    "DSC_0030.jpg",
+    "DSC_0031.jpg",
+    "DSC_0032.jpg",
+    "DSC_0033.jpg",
+    "DSC_0035.jpg",
+    "DSC_0036.jpg",
+    "DSC_0027.jpg",
+    "DSC_0040.jpg",
+    "DSC_0037.jpg",
+    "DSC_0038.jpg",
+    "DSC_0039.jpg",
+  ],
 };
 
 export type BrandSlug = keyof typeof BRAND_IMAGES;

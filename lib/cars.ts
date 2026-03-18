@@ -110,7 +110,7 @@ export const cars: Car[] = [
   },
   {
     car_id: 19,
-    title: "Nissan Xterra",
+    title: "Nissan X-Terra",
     img: "trial.png",
     category: "suv",
     capacity: 7,
@@ -210,7 +210,7 @@ export const cars: Car[] = [
   },
   {
     car_id: 32,
-    title: "Nissan XTrail",
+    title: "Nissan X-Trail",
     img: "xtrail.png",
     category: "suv",
     capacity: 5,
@@ -221,7 +221,7 @@ export const cars: Car[] = [
   {
     car_id: 33,
     title: "Jetour T2 (Black)",
-    img: "jetour.png",
+    img: "jetour_black.png",
     category: "suv",
     capacity: 5,
     daily_price: "350 د.إ",
@@ -257,6 +257,16 @@ export const cars: Car[] = [
     daily_price: "200 د.إ",
     weekly_price: "1200 د.إ",
     monthly_price: "3600 د.إ",
+  },
+  {
+    car_id: 37,
+    title: "Jetour T2 (Black)",
+    img: "jetour.png",
+    category: "suv",
+    capacity: 5,
+    daily_price: "350 د.إ",
+    weekly_price: "2100 د.إ",
+    monthly_price: "7000 د.إ",
   },
 
 ];
