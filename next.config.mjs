@@ -8,6 +8,10 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
+    // Modern formats first; roughly 25-35% smaller than JPEG at equal quality.
+    formats: ["image/avif", "image/webp"],
+    // Cache generated variants for 30 days so repeat views skip re-transforming.
+    minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   transpilePackages: [],
   async headers() {

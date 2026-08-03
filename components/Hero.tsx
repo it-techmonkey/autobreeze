@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 const HERO_IMAGES = [
   "/img/landing/landing0.png",
   "/img/landing/landing1.png",
@@ -16,16 +16,55 @@ const SLIDE_INTERVAL_MS = 5000;
 
 export default function Hero() {
   const [index, setIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
 
+  // Advance slides only while the hero is actually visible and the tab is in the
+  // foreground. Without this the timer keeps decoding new images forever, which
+  // grows memory the whole time the tab is open.
   useEffect(() => {
-    const t = setInterval(() => {
-      setIndex((i) => (i + 1) % HERO_IMAGES.length);
-    }, SLIDE_INTERVAL_MS);
-    return () => clearInterval(t);
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let timer: ReturnType<typeof setInterval> | null = null;
+    let onScreen = false;
+
+    const stop = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    };
+
+    const sync = () => {
+      const shouldRun = onScreen && document.visibilityState === "visible";
+      if (shouldRun && !timer) {
+        timer = setInterval(() => {
+          setIndex((i) => (i + 1) % HERO_IMAGES.length);
+        }, SLIDE_INTERVAL_MS);
+      } else if (!shouldRun) {
+        stop();
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+        sync();
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(section);
+    document.addEventListener("visibilitychange", sync);
+
+    return () => {
+      stop();
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", sync);
+    };
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0A0A0A]">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0A0A0A]">
       <div className="absolute inset-0">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -41,10 +80,8 @@ export default function Hero() {
               alt=""
               fill
               priority={index === 0}
-              loading={index === 0 ? "eager" : "lazy"}
               className="object-cover object-center"
               sizes="100vw"
-              unoptimized
             />
           </motion.div>
         </AnimatePresence>

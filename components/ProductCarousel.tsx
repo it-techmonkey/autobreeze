@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scrollLock";
 
 const S3_CAR_BASE = "https://car-image-bucket-2024.s3.ap-south-1.amazonaws.com/car";
 
@@ -25,15 +26,16 @@ export default function ProductCarousel({
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [load360Iframe, setLoad360Iframe] = useState(false);
   const [zoomOpen, setZoomOpen] = useState(false);
+  const [showAllThumbs, setShowAllThumbs] = useState(false);
   const dragStartX = useRef(0);
   const touchStartX = useRef(0);
   const zoomDragStartX = useRef(0);
   const zoomTouchStartX = useRef(0);
 
   useEffect(() => {
-    if (zoomOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
-    return () => { document.body.style.overflow = ""; };
+    if (!zoomOpen) return;
+    lockBodyScroll();
+    return () => unlockBodyScroll();
   }, [zoomOpen]);
 
   // Lazy-load 360 iframe only after user has been on the 360 slide for 300ms (instant page load).
@@ -112,6 +114,21 @@ export default function ProductCarousel({
     ...(has360 ? [{ type: "360" as const, label: "360°" }] : []),
   ];
 
+  // Some folders hold 25+ photos. Render a subset up front so the page stays
+  // light on mobile; arrows/swipe still reach every slide either way. Each
+  // thumbnail keeps its true slide index so goTo() stays correct when sliced,
+  // and the 360 tile is always appended so it never gets cut off.
+  const THUMB_LIMIT = 8;
+  const indexedThumbnails = thumbnails.map((item, index) => ({ ...item, index }));
+  const photoThumbs = indexedThumbnails.filter((t) => t.type === "image");
+  const spinThumb = indexedThumbnails.find((t) => t.type === "360");
+  const thumbsHidden =
+    showAllThumbs ? 0 : Math.max(0, photoThumbs.length - THUMB_LIMIT);
+  const visibleThumbnails = [
+    ...(thumbsHidden > 0 ? photoThumbs.slice(0, THUMB_LIMIT) : photoThumbs),
+    ...(spinThumb ? [spinThumb] : []),
+  ];
+
   return (
     <div className="flex flex-col gap-4">
       {/* Main viewer */}
@@ -172,10 +189,10 @@ export default function ProductCarousel({
                   }
                   alt={`${carTitle} – view ${currentIndex + 1}`}
                   fill
+                  priority={currentIndex === 0}
                   className="car-image-zoom"
                   style={{ objectPosition: "center 16%" }}
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  unoptimized={(currentImageUrl || "").startsWith("/static_images")}
                   onError={(e) => {
                     const t = e.currentTarget;
                     if (fallbackImg && t.src !== fallbackImg) t.src = fallbackImg;
@@ -256,7 +273,6 @@ export default function ProductCarousel({
                 className="object-cover"
                 style={{ objectPosition: "center 16%" }}
                 sizes="(max-width: 1280px) 100vw, 1280px"
-                unoptimized={currentImageUrl.startsWith("/static_images")}
               />
               {totalSlides > 1 && (
                 <>
@@ -290,13 +306,13 @@ export default function ProductCarousel({
       {/* Thumbnails */}
       {thumbnails.length > 1 && (
         <div className="flex flex-wrap justify-center gap-2">
-          {thumbnails.map((item, i) => (
+          {visibleThumbnails.map((item) => (
             <button
               key={item.type === "360" ? "360" : item.url}
               type="button"
-              onClick={() => goTo(i)}
+              onClick={() => goTo(item.index)}
               className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition ${
-                currentIndex === i
+                currentIndex === item.index
                   ? "border-gold ring-2 ring-gold/30"
                   : "border-white/20 hover:border-white/40"
               }`}
@@ -311,14 +327,23 @@ export default function ProductCarousel({
                     src={item.url}
                     alt=""
                     fill
+                    loading="lazy"
                     className="car-image-zoom"
                     sizes="80px"
-                    unoptimized={item.url.startsWith("/static_images")}
                   />
                 </span>
               )}
             </button>
           ))}
+          {thumbsHidden > 0 && !showAllThumbs && (
+            <button
+              type="button"
+              onClick={() => setShowAllThumbs(true)}
+              className="h-14 w-20 shrink-0 rounded-lg border-2 border-white/20 bg-charcoal text-xs font-semibold text-white/80 transition hover:border-gold/50 hover:text-gold"
+            >
+              +{thumbsHidden} more
+            </button>
+          )}
         </div>
       )}
     </div>
