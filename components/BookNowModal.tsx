@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BookingForm, { type RentalPlan } from "./BookingForm";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scrollLock";
 
 interface BookNowModalProps {
   isOpen: boolean;
@@ -13,8 +14,9 @@ interface BookNowModalProps {
 
 export default function BookNowModal({ isOpen, onClose, initialCar = "", initialPlan = "Daily" }: BookNowModalProps) {
   useEffect(() => {
-    if (isOpen) document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
+    if (!isOpen) return;
+    lockBodyScroll();
+    return () => unlockBodyScroll();
   }, [isOpen]);
 
   return (

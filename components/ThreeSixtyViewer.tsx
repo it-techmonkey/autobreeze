@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scrollLock";
 
 interface ThreeSixtyViewerProps {
   isOpen: boolean;
@@ -22,22 +23,23 @@ export default function ThreeSixtyViewer({
   const loadedRef = useRef(false);
 
   useEffect(() => {
+    if (!isOpen) return;
+    lockBodyScroll();
+    return () => unlockBodyScroll();
+  }, [isOpen]);
+
+  useEffect(() => {
     if (!isOpen) {
       setIframeSrc(null);
       setLoaded(false);
       loadedRef.current = false;
-      document.body.style.overflow = "";
       return;
     }
-    document.body.style.overflow = "hidden";
     // Defer loading the heavy iframe until after the modal has opened (instant UX).
     const t = setTimeout(() => {
       setIframeSrc(url);
     }, 150);
-    return () => {
-      clearTimeout(t);
-      document.body.style.overflow = "";
-    };
+    return () => clearTimeout(t);
   }, [isOpen, url]);
 
   if (!isOpen) return null;
