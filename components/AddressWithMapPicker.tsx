@@ -5,8 +5,6 @@ import dynamic from "next/dynamic";
 
 const LocationMapPicker = dynamic(() => import("./LocationMapPicker"), { ssr: false });
 
-const LEAFLET_SCRIPT = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-const LEAFLET_CSS = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
 const NOMINATIM_SEARCH_URL =
   "https://nominatim.openstreetmap.org/search?format=json&q={query}&addressdetails=1&limit=5";
 
@@ -25,20 +23,23 @@ async function searchAddress(query: string): Promise<SearchResult[]> {
   return (await res.json()) as SearchResult[];
 }
 
-function preloadLeaflet() {
+/**
+ * Warm the DNS/TLS connection to the CDN without downloading Leaflet itself.
+ * This component renders inside the booking form on the home page, so eagerly
+ * fetching leaflet.js here pulled ~150 KB from a third-party host on every
+ * visit — and stalled the page whenever unpkg was slow — even though the map
+ * only ever opens if someone clicks "Map". LocationMapPicker already loads the
+ * script on demand, so preconnect is all that is needed up front.
+ */
+function preconnectLeafletCdn() {
   if (typeof document === "undefined") return;
-  if (!document.querySelector(`link[href="${LEAFLET_CSS}"]`)) {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = LEAFLET_CSS;
-    document.head.appendChild(link);
-  }
-  if (!document.querySelector(`script[src="${LEAFLET_SCRIPT}"]`)) {
-    const script = document.createElement("script");
-    script.src = LEAFLET_SCRIPT;
-    script.async = true;
-    document.head.appendChild(script);
-  }
+  if (document.querySelector('link[data-leaflet-preconnect="1"]')) return;
+  const link = document.createElement("link");
+  link.rel = "preconnect";
+  link.href = "https://unpkg.com";
+  link.crossOrigin = "anonymous";
+  link.dataset.leafletPreconnect = "1";
+  document.head.appendChild(link);
 }
 
 function MapPinIcon({ className }: { className?: string }) {
@@ -71,7 +72,7 @@ export default function AddressWithMapPicker({
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    preloadLeaflet();
+    preconnectLeafletCdn();
   }, []);
 
   useEffect(() => {

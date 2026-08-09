@@ -5,9 +5,9 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 const HERO_IMAGES = [
-  "/img/landing/landing0.png",
-  "/img/landing/landing1.png",
-  "/img/landing/landing2.png",
+  "/img/landing/landing0.jpg",
+  "/img/landing/landing1.jpg",
+  "/img/landing/landing2.jpg",
   "/img/landing/landing3.jpg",
   "/img/landing/landing4.jpg",
   "/img/landing/landing5.jpg",
